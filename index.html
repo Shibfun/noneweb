@@ -100,6 +100,16 @@
             margin-bottom: 10px;
             animation: fade 3s infinite;
         }
+        .pending-none {
+            font-size: 0.9em;
+            color: #E07A5F;
+            text-align: center;
+            cursor: pointer;
+            transition: color 0.3s;
+        }
+        .pending-none:hover {
+            color: #F4A261;
+        }
         @keyframes fade {
             0%, 100% { opacity: 0.7; }
             50% { opacity: 1; }
@@ -236,7 +246,7 @@
             width: 100%;
             color: #A8B5D4;
             font-size: 0.8em;
-            margin-top: 20px; /* 增加底部间距 */
+            margin-top: 20px;
         }
         @media (max-width: 480px) {
             .header-content h1 { font-size: 1.3em; }
@@ -261,6 +271,7 @@
             <h2 id="subtitle">Mining on Shibarium</h2>
             <div class="miner-gif"></div>
             <div class="miner-prompt" id="minerPrompt"></div>
+            <div class="pending-none" id="pendingNone" onclick="claimReferralReward()">Pending: 0 NONE</div>
         </div>
     </div>
     <div class="container">
@@ -338,6 +349,14 @@
         ];
         let promptIndex = 0;
 
+        const claimMessages = [
+            "Hey miner! Invite a buddy to join the NONE party and claim this loot! 🚀",
+            "Your NONE is waiting! Call a friend to the mines and snag it! ⛏️",
+            "Whoa, free NONE! Get a pal to join and it’s yours, digger! 💎",
+            "Jackpot alert! Bring a friend aboard to unlock this NONE treasure! 💰",
+            "More miners, more NONE! Invite someone and grab your reward! ⚡"
+        ];
+
         function showModal(message) {
             document.getElementById('modalMessage').innerText = message;
             document.getElementById('modal').style.display = 'flex';
@@ -352,7 +371,31 @@
             promptIndex = (promptIndex + 1) % prompts.length;
         }
 
+        async function updatePendingNone() {
+            if (!web3 || !contract || !accounts) {
+                document.getElementById('pendingNone').innerText = 'Pending: 0 NONE';
+                return;
+            }
+            try {
+                const rewardInfo = await contract.methods.getRewardInfo(accounts[0]).call();
+                const pendingReward = web3.utils.fromWei(rewardInfo[0], 'ether');
+                document.getElementById('pendingNone').innerText = `Pending: ${parseFloat(pendingReward).toFixed(2)} NONE`;
+            } catch (error) {
+                document.getElementById('pendingNone').innerText = 'Pending: 0 NONE';
+            }
+        }
+
+        function claimReferralReward() {
+            if (!web3 || !contract || !accounts) {
+                showModal('Connect your wallet first, miner! 🔧');
+                return;
+            }
+            const randomMsg = claimMessages[Math.floor(Math.random() * claimMessages.length)];
+            showModal(randomMsg);
+        }
+
         setInterval(updatePrompt, 3000);
+        setInterval(updatePendingNone, 5000);
 
         async function connectWallet() {
             const connectButton = document.getElementById('connectButton');
@@ -393,6 +436,7 @@
                 updateNoneBalance();
                 updateJoinSection();
                 updateNodeSection();
+                updatePendingNone();
             } catch (error) {
                 showModal(`Connection failed: ${error.message}`);
             } finally {
@@ -404,7 +448,7 @@
             if (!web3 || !contract || !accounts) return;
             try {
                 const result = await contract.methods.getUserStatus(accounts[0]).call();
-                const hasPaidBone = result[1]; // 直接访问索引 1
+                const hasPaidBone = result[1];
                 const joinSection = document.getElementById('joinSection');
                 if (hasPaidBone) {
                     joinSection.innerHTML = `
@@ -432,7 +476,7 @@
             if (!web3 || !contract || !accounts) return;
             try {
                 const result = await contract.methods.getUserStatus(accounts[0]).call();
-                const isNode = result[2]; // 直接访问索引 2
+                const isNode = result[2];
                 const nodeSection = document.getElementById('nodeSection');
                 if (isNode) {
                     const nodeId = await contract.methods.getUserNodeId(accounts[0]).call();
