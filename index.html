@@ -257,6 +257,11 @@
             border-radius: 20px;
             font-size: 0.9em;
         }
+        .my-stakes {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #E07A5F;
+        }
         footer {
             background: rgba(30, 42, 68, 0.8);
             text-align: center;
@@ -338,6 +343,7 @@
                 <button class="percentage-btn" onclick="setStakePercentage(75)">75%</button>
                 <button class="percentage-btn" onclick="setStakePercentage(100)">100%</button>
             </div>
+            <div class="my-stakes" id="myStakes">My Stakes: None</div>
         </div>
     </div>
     <footer id="footer">Powered by Shibarium © 2025</footer>
@@ -517,6 +523,25 @@
             }
         }
 
+        async function updateMyStakes() {
+            if (!web3 || !contract || !accounts) {
+                document.getElementById('myStakes').innerText = 'My Stakes: None';
+                return;
+            }
+            try {
+                const stakeInfo = await contract.methods.getStakeInfo(accounts[0]).call();
+                const amount = web3.utils.fromWei(stakeInfo[0], 'ether');
+                const nodeId = stakeInfo[1];
+                if (parseInt(amount) > 0) {
+                    document.getElementById('myStakes').innerText = `My Stakes: Node ${nodeId}: ${parseFloat(amount).toFixed(2)} NONE`;
+                } else {
+                    document.getElementById('myStakes').innerText = 'My Stakes: None';
+                }
+            } catch (error) {
+                document.getElementById('myStakes').innerText = 'My Stakes: None';
+            }
+        }
+
         function claimReferralReward() {
             if (!web3 || !contract || !accounts) {
                 showModal('Connect your wallet first, miner! 🔧');
@@ -528,6 +553,7 @@
 
         setInterval(updatePrompt, 3000);
         setInterval(updateRewardNone, 5000);
+        setInterval(updateMyStakes, 5000);
 
         async function connectWallet() {
             const connectButton = document.getElementById('connectButton');
@@ -570,6 +596,7 @@
                 updateNodeSection();
                 updateRewardNone();
                 updateUserInfo(accounts[0]);
+                updateMyStakes();
             } catch (error) {
                 showModal(`Connection failed: ${error.message}`);
             } finally {
@@ -707,6 +734,7 @@
                 await contract.methods.stakeToNode(nodeId, web3.utils.toWei(amount, "ether")).send({ from: accounts[0] });
                 showModal(`Staked ${amount} NONE to Node ${nodeId}! 💰`);
                 updateNoneBalance();
+                updateMyStakes();
             } catch (error) {
                 showModal('Staking failed: ' + error.message);
             }
@@ -722,6 +750,7 @@
                 await contract.methods.withdrawStake().send({ from: accounts[0] });
                 showModal('Stake withdrawn with rewards! 🎊');
                 updateNoneBalance();
+                updateMyStakes();
             } catch (error) {
                 showModal('Withdrawal failed: ' + error.message);
             }
