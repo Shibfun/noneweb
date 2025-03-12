@@ -5,15 +5,17 @@
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>NoneToken Mining Hub</title>
     <link rel="icon" type="image/png" href="images/none.png">
-    <!-- 引入 Font Awesome 图标库 -->
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
-        * { margin: 0; padding: 0; box-sizing: border-box; }
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
         body {
             font-family: 'Arial', sans-serif;
-            background: #2C2F54 url('images/background.png') no-repeat center center fixed;
-            background-size: cover; /* 背景图拉伸填充 */
-            filter: blur(5px); /* 模糊效果 */
+            background: #2C2F54 url('images/background.png') repeat center top;
+            background-size: contain;
             color: #fff;
             line-height: 1.4;
             overflow-x: hidden;
@@ -29,16 +31,16 @@
             top: 0;
             left: 0;
             width: 100%;
-            height: 100%;
-            background: rgba(44, 47, 84, 0.6); /* 半透明遮罩，增强前景对比 */
+            height: 200px;
+            background: #2C2F54;
             z-index: 1;
         }
         .header, .container, footer, .modal {
             position: relative;
-            z-index: 2; /* 确保前景内容在背景图之上 */
+            z-index: 2;
         }
         .header {
-            background: rgba(30, 42, 68, 0.8); /* 半透明背景 */
+            background: rgba(30, 42, 68, 0.8);
             padding: 10px 0;
             text-align: center;
             width: 100%;
@@ -88,7 +90,7 @@
         .miner-gif {
             width: 80px;
             height: 80px;
-            background: url('images/Miner.png') no-repeat center;
+            background: url('images/miner.gif') no-repeat center;
             background-size: contain;
             margin: 0 auto 10px;
         }
@@ -113,7 +115,7 @@
             gap: 15px;
         }
         .section {
-            background: rgba(44, 62, 80, 0.9); /* 半透明卡片背景 */
+            background: rgba(44, 62, 80, 0.9);
             padding: 15px;
             border-radius: 15px;
             box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
@@ -301,14 +303,12 @@
         </div>
     </div>
     <footer id="footer">Powered by Shibarium © 2025</footer>
-
     <div id="modal" class="modal">
         <div class="modal-content">
             <p id="modalMessage"></p>
             <button onclick="closeModal()">OK</button>
         </div>
     </div>
-
     <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
     <script>
         let web3, accounts, contract;
@@ -319,9 +319,8 @@
             chainName: 'Shibarium',
             nativeCurrency: { name: 'BONE', symbol: 'BONE', decimals: 18 },
             rpcUrls: ['https://www.shibrpc.com'],
-            blockExplorerUrls: ['https://shibariumscan.io'],
+            blockExplorerUrls: ['https://shibariumscan.io']
         };
-
         const translations = {
             en: {
                 title: "NoneToken Mining Hub",
@@ -462,7 +461,6 @@
                 ]
             }
         };
-
         let currentLang = 'en';
         let promptIndex = 0;
 
@@ -505,7 +503,7 @@
             promptIndex = (promptIndex + 1) % t.prompts.length;
         }
 
-        setInterval(updatePrompt, 3000); // 每 3 秒切换提示
+        setInterval(updatePrompt, 3000);
 
         async function connectWallet() {
             const t = translations[currentLang];
@@ -652,10 +650,8 @@
         document.getElementById('stakeButton').addEventListener('click', stakeToNode);
         document.getElementById('withdrawStakeButton').addEventListener('click', withdrawStake);
         document.getElementById('languageSwitcher').addEventListener('change', (e) => updateLanguage(e.target.value));
-
         window.ethereum?.on('chainChanged', connectWallet);
         window.ethereum?.on('accountsChanged', connectWallet);
-
         updateLanguage('en');
         updatePrompt();
     </script>
