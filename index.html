@@ -1,0 +1,646 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>NoneToken Mining Hub</title>
+    <link rel="icon" type="image/png" href="images/none.png">
+    <!-- 引入 Font Awesome 图标库 -->
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        * { margin: 0; padding: 0; box-sizing: border-box; }
+        body {
+            font-family: 'Arial', sans-serif;
+            background: #2C2F54;
+            color: #fff;
+            line-height: 1.4;
+            overflow-x: hidden;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            min-height: 100vh;
+        }
+        .header {
+            background: #2C2F54;
+            padding: 10px 0;
+            text-align: center;
+            width: 100%;
+        }
+        .header-top {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+            padding: 0 15px;
+            background: #1E213D;
+            height: 40px;
+        }
+        .header-top .balance {
+            font-size: 1.1em;
+            color: #F4A261;
+        }
+        .header-top .actions {
+            display: flex;
+            gap: 10px;
+        }
+        .language-switcher, .action-btn {
+            background: #34495E;
+            color: #fff;
+            border: none;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.8em;
+            cursor: pointer;
+        }
+        .action-btn i {
+            font-size: 1em;
+        }
+        .header-content {
+            padding: 20px 0;
+        }
+        .header-content h1 {
+            font-size: 1.5em;
+            color: #F4A261;
+            text-transform: uppercase;
+            margin-bottom: 5px;
+        }
+        .header-content h2 {
+            font-size: 0.9em;
+            color: #A8B5D4;
+            margin-bottom: 10px;
+        }
+        .miner-gif {
+            width: 80px;
+            height: 80px;
+            background: url('images/Miner.png') no-repeat center;
+            background-size: contain;
+            margin: 0 auto 10px;
+        }
+        .miner-prompt {
+            font-size: 0.8em;
+            color: #F4A261;
+            text-align: center;
+            margin-bottom: 10px;
+            animation: fade 3s infinite;
+        }
+        @keyframes fade {
+            0%, 100% { opacity: 0.7; }
+            50% { opacity: 1; }
+        }
+        .container {
+            width: 100%;
+            max-width: 400px;
+            padding: 0 10px;
+            flex-grow: 1;
+            display: flex;
+            flex-direction: column;
+            gap: 15px;
+        }
+        .section {
+            background: #2C3E50;
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            text-align: center;
+        }
+        .section-title {
+            font-size: 1.1em;
+            color: #F4A261;
+            margin-bottom: 10px;
+        }
+        .button-group {
+            display: flex;
+            justify-content: center;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        button {
+            background: #F4A261;
+            color: #fff;
+            border: none;
+            padding: 8px 15px;
+            border-radius: 20px;
+            cursor: pointer;
+            font-size: 0.9em;
+            transition: background 0.3s;
+        }
+        button:hover {
+            background: #E07A5F;
+        }
+        .input-group {
+            display: flex;
+            flex-direction: column;
+            gap: 8px;
+            margin: 10px 0;
+        }
+        input {
+            padding: 8px;
+            border: none;
+            border-radius: 10px;
+            background: #34495E;
+            color: #fff;
+            font-size: 0.9em;
+            text-align: center;
+        }
+        input:focus {
+            outline: none;
+            box-shadow: 0 0 3px #F4A261;
+        }
+        .percentage-buttons {
+            display: flex;
+            justify-content: center;
+            gap: 5px;
+            margin: 10px 0;
+        }
+        .percentage-btn {
+            background: #F4A261;
+            color: #fff;
+            border: none;
+            padding: 6px 10px;
+            border-radius: 15px;
+            font-size: 0.8em;
+            cursor: pointer;
+            transition: background 0.3s;
+        }
+        .percentage-btn:hover {
+            background: #E07A5F;
+        }
+        .info-panel {
+            background: #34495E;
+            padding: 10px;
+            border-radius: 10px;
+            margin-top: 10px;
+            font-size: 0.8em;
+        }
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.7);
+            justify-content: center;
+            align-items: center;
+        }
+        .modal-content {
+            background: #2C3E50;
+            padding: 20px;
+            border-radius: 15px;
+            text-align: center;
+            color: #fff;
+            max-width: 300px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+        }
+        .modal-content p {
+            margin-bottom: 15px;
+            font-size: 1em;
+        }
+        .modal-content button {
+            background: #F4A261;
+            padding: 8px 15px;
+            border-radius: 20px;
+            font-size: 0.9em;
+        }
+        footer {
+            background: #1E2A44;
+            text-align: center;
+            padding: 10px;
+            width: 100%;
+            color: #A8B5D4;
+            font-size: 0.8em;
+        }
+        @media (max-width: 480px) {
+            .header-content h1 { font-size: 1.3em; }
+            .miner-gif { width: 60px; height: 60px; }
+            button { padding: 6px 12px; font-size: 0.8em; }
+            input { font-size: 0.8em; }
+            .miner-prompt { font-size: 0.7em; }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <div class="header-top">
+            <span id="noneBalance">0 NONE</span>
+            <div class="actions">
+                <button class="action-btn" onclick="window.open('https://twitter.com', '_blank')"><i class="fab fa-twitter"></i></button>
+                <button class="action-btn" onclick="window.open('https://telegram.org', '_blank')"><i class="fab fa-telegram-plane"></i></button>
+                <select class="language-switcher" id="languageSwitcher">
+                    <option value="en">EN</option>
+                    <option value="zh">ZH</option>
+                    <option value="ja">JA</option>
+                </select>
+            </div>
+        </div>
+        <div class="header-content">
+            <h1 id="title">NoneToken Mining Hub</h1>
+            <h2 id="subtitle">February 20, 2025</h2>
+            <div class="miner-gif"></div>
+            <div class="miner-prompt" id="minerPrompt"></div>
+        </div>
+    </div>
+    <div class="container">
+        <div class="section">
+            <div class="section-title" id="connectTitle">Connect Wallet</div>
+            <div class="button-group">
+                <button id="connectButton">Connect</button>
+            </div>
+            <div id="walletStatus" class="info-panel">Wallet: Not Connected</div>
+        </div>
+        <div class="section">
+            <div class="section-title" id="joinTitle">Join Network</div>
+            <div class="button-group">
+                <button id="joinWithReferrerButton">Join (10 BONE)</button>
+            </div>
+            <div class="input-group">
+                <input type="text" id="referrerInput" placeholder="Referrer Address">
+            </div>
+            <div id="joinInfo" class="info-panel"></div>
+        </div>
+        <div class="section">
+            <div class="section-title" id="nodeTitle">Become a Node</div>
+            <div class="button-group">
+                <button id="becomeNodeButton">Node (1000 BONE)</button>
+            </div>
+            <div id="nodeInfo" class="info-panel"></div>
+        </div>
+        <div class="section">
+            <div class="section-title" id="stakeTitle">Stake NONE</div>
+            <div class="button-group">
+                <button id="stakeButton">Stake</button>
+                <button id="withdrawStakeButton">Withdraw</button>
+            </div>
+            <div class="input-group">
+                <input type="text" id="nodeIdInput" placeholder="Node ID (1-2100)">
+                <input type="text" id="stakeAmountInput" placeholder="Amount (Min 10000 NONE)">
+            </div>
+            <div class="percentage-buttons">
+                <button class="percentage-btn" onclick="setStakePercentage(25)">25%</button>
+                <button class="percentage-btn" onclick="setStakePercentage(50)">50%</button>
+                <button class="percentage-btn" onclick="setStakePercentage(75)">75%</button>
+                <button class="percentage-btn" onclick="setStakePercentage(100)">100%</button>
+            </div>
+            <div id="stakeInfo" class="info-panel"></div>
+        </div>
+    </div>
+    <footer id="footer">Powered by Shibarium © 2025</footer>
+
+    <div id="modal" class="modal">
+        <div class="modal-content">
+            <p id="modalMessage"></p>
+            <button onclick="closeModal()">OK</button>
+        </div>
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
+    <script>
+        let web3, accounts, contract;
+        const contractAddress = "0x64E19b6a167878d2483d166212A3c2c68b1eB842";
+        const contractABI = /* [Your ABI here, same as original] */;
+        const shibariumMainnet = {
+            chainId: 109,
+            chainName: 'Shibarium',
+            nativeCurrency: { name: 'BONE', symbol: 'BONE', decimals: 18 },
+            rpcUrls: ['https://www.shibrpc.com'],
+            blockExplorerUrls: ['https://shibariumscan.io'],
+        };
+
+        const translations = {
+            en: {
+                title: "NoneToken Mining Hub",
+                subtitle: "February 20, 2025",
+                connectTitle: "Connect Wallet",
+                walletStatus: "Wallet: Not Connected",
+                joinTitle: "Join Network",
+                joinButton: "Join (10 BONE)",
+                referrerPlaceholder: "Referrer Address",
+                nodeTitle: "Become a Node",
+                nodeButton: "Node (1000 BONE)",
+                stakeTitle: "Stake NONE",
+                stakeButton: "Stake",
+                withdrawButton: "Withdraw",
+                nodeIdPlaceholder: "Node ID (1-2100)",
+                amountPlaceholder: "Amount (Min 10000 NONE)",
+                footer: "Powered by Shibarium © 2025",
+                connectPrompt: "Connecting to your wallet... ⛏️",
+                connectError: "Connection failed: ",
+                joinPrompt: "Joining network with 10 BONE... 💎",
+                joinError: "Join failed: ",
+                joinSuccess: "Joined successfully! Start mining! 🚀",
+                nodePrompt: "Upgrading to node with 1000 BONE... ⚙️",
+                nodeError: "Node upgrade failed: ",
+                nodeSuccess: "Upgraded to node! You're a mining boss! 🎉",
+                stakePrompt: "Staking {amount} NONE to Node {nodeId}... ⛏️",
+                stakeError: "Staking failed: ",
+                stakeSuccess: "Staked {amount} NONE to Node {nodeId}! 💰",
+                withdrawPrompt: "Withdrawing your stake... 💸",
+                withdrawError: "Withdrawal failed: ",
+                withdrawSuccess: "Stake withdrawn with rewards! 🎊",
+                connectFirst: "Please connect your wallet first! 🔧",
+                nodeIdDisplay: "Your Node ID: ",
+                referralCount: "Referrals: ",
+                prompts: [
+                    "⛏️ Miner, ready your pickaxe! Let's dig some NONE!",
+                    "💎 Found any NONE yet? Keep mining, champ!",
+                    "⚡ Power up your rig! NONE awaits you!",
+                    "🚀 Blast off to the NONE mines! Go go go!",
+                    "🔥 Hot streak! Dig deeper for more NONE!",
+                    "💰 Jackpot time! Stake more to win big!",
+                    "⛏️ Swing that pickaxe! NONE is calling!",
+                    "🌟 Shine bright, miner! NONE is your gem!",
+                    "⚙️ Gear up! The NONE mines are open!",
+                    "🎉 Party in the mines! Dig for NONE now!"
+                ]
+            },
+            zh: {
+                title: "NoneToken 挖矿中心",
+                subtitle: "2025年2月20日",
+                connectTitle: "连接钱包",
+                walletStatus: "钱包: 未连接",
+                joinTitle: "加入网络",
+                joinButton: "加入 (10 BONE)",
+                referrerPlaceholder: "推荐人地址",
+                nodeTitle: "成为节点",
+                nodeButton: "节点 (1000 BONE)",
+                stakeTitle: "质押 NONE",
+                stakeButton: "质押",
+                withdrawButton: "撤回",
+                nodeIdPlaceholder: "节点 ID (1-2100)",
+                amountPlaceholder: "数量 (最小 10000 NONE)",
+                footer: "由 Shibarium 驱动 © 2025",
+                connectPrompt: "连接钱包中... ⛏️",
+                connectError: "连接失败: ",
+                joinPrompt: "用10 BONE加入网络... 💎",
+                joinError: "加入失败: ",
+                joinSuccess: "加入成功！开始挖矿！🚀",
+                nodePrompt: "用1000 BONE升级为节点... ⚙️",
+                nodeError: "节点升级失败: ",
+                nodeSuccess: "升级为节点！你是挖矿大佬！🎉",
+                stakePrompt: "将 {amount} NONE 质押到节点 {nodeId}... ⛏️",
+                stakeError: "质押失败: ",
+                stakeSuccess: "已将 {amount} NONE 质押到节点 {nodeId}！💰",
+                withdrawPrompt: "撤回质押中... 💸",
+                withdrawError: "撤回失败: ",
+                withdrawSuccess: "质押已撤回，带奖励！🎊",
+                connectFirst: "请先连接钱包！🔧",
+                nodeIdDisplay: "你的节点 ID: ",
+                referralCount: "邀请人数: ",
+                prompts: [
+                    "⛏️ 矿工，准备好你的镐！开挖 NONE 吧！",
+                    "💎 挖到 NONE 了吗？继续努力，冠军！",
+                    "⚡ 给你的矿机加电！NONE 在等你！",
+                    "🚀 冲向 NONE 矿场！快快快！",
+                    "🔥 热火朝天！挖深点拿更多 NONE！",
+                    "💰 大奖时刻！多质押赢大奖！",
+                    "⛏️ 挥动你的镐！NONE 在召唤！",
+                    "🌟 闪耀吧，矿工！NONE 是你的宝石！",
+                    "⚙️ 装备好！NONE 矿场已开放！",
+                    "🎉 矿场派对！现在就挖 NONE 吧！"
+                ]
+            },
+            ja: {
+                title: "NoneToken マイニングハブ",
+                subtitle: "2025年2月20日",
+                connectTitle: "ウォレットを接続",
+                walletStatus: "ウォレット: 未接続",
+                joinTitle: "ネットワークに参加",
+                joinButton: "参加 (10 BONE)",
+                referrerPlaceholder: "紹介者アドレス",
+                nodeTitle: "ノードになる",
+                nodeButton: "ノード (1000 BONE)",
+                stakeTitle: "NONEをステーク",
+                stakeButton: "ステーク",
+                withdrawButton: "引き出し",
+                nodeIdPlaceholder: "ノード ID (1-2100)",
+                amountPlaceholder: "数量 (最小 10000 NONE)",
+                footer: "Shibarium 提供 © 2025",
+                connectPrompt: "ウォレットに接続中... ⛏️",
+                connectError: "接続失敗: ",
+                joinPrompt: "10 BONEでネットワークに参加中... 💎",
+                joinError: "参加失敗: ",
+                joinSuccess: "参加成功！マイニング開始！🚀",
+                nodePrompt: "1000 BONEでノードにアップグレード中... ⚙️",
+                nodeError: "ノードアップグレード失敗: ",
+                nodeSuccess: "ノードにアップグレード！マイニングボス！🎉",
+                stakePrompt: "{amount} NONEをノード {nodeId} にステーク中... ⛏️",
+                stakeError: "ステーク失敗: ",
+                stakeSuccess: "{amount} NONEをノード {nodeId} にステークしました！💰",
+                withdrawPrompt: "ステークを引き出し中... 💸",
+                withdrawError: "引き出し失敗: ",
+                withdrawSuccess: "ステークが報酬と一緒に引き出されました！🎊",
+                connectFirst: "まずウォレットを接続してください！🔧",
+                nodeIdDisplay: "あなたのノード ID: ",
+                referralCount: "紹介人数: ",
+                prompts: [
+                    "⛏️ マイナー、つるはしを準備！NONEを掘ろう！",
+                    "💎 NONEは見つかった？頑張れ、チャンピオン！",
+                    "⚡ マイニングリグに電力注入！NONEが待ってる！",
+                    "🚀 NONE鉱山へ出発！急げ急げ！",
+                    "🔥 熱いぞ！もっと深く掘ってNONEゲット！",
+                    "💰 大当たり！もっとステークして大勝利！",
+                    "⛏️ つるはしを振れ！NONEが呼んでる！",
+                    "🌟 輝け、マイナー！NONEは君の宝石だ！",
+                    "⚙️ 装備を整えよう！NONE鉱山が開いた！",
+                    "🎉 鉱山パーティー！今すぐNONEを掘ろう！"
+                ]
+            }
+        };
+
+        let currentLang = 'en';
+        let promptIndex = 0;
+
+        function updateLanguage(lang) {
+            currentLang = lang;
+            const t = translations[lang];
+            document.getElementById('title').innerText = t.title;
+            document.getElementById('subtitle').innerText = t.subtitle;
+            document.getElementById('connectTitle').innerText = t.connectTitle;
+            document.getElementById('walletStatus').innerText = contract ? `Wallet: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}` : t.walletStatus;
+            document.getElementById('joinTitle').innerText = t.joinTitle;
+            document.getElementById('joinWithReferrerButton').innerText = t.joinButton;
+            document.getElementById('referrerInput').placeholder = t.referrerPlaceholder;
+            document.getElementById('nodeTitle').innerText = t.nodeTitle;
+            document.getElementById('becomeNodeButton').innerText = t.nodeButton;
+            document.getElementById('stakeTitle').innerText = t.stakeTitle;
+            document.getElementById('stakeButton').innerText = t.stakeButton;
+            document.getElementById('withdrawStakeButton').innerText = t.withdrawButton;
+            document.getElementById('nodeIdInput').placeholder = t.nodeIdPlaceholder;
+            document.getElementById('stakeAmountInput').placeholder = t.amountPlaceholder;
+            document.getElementById('footer').innerText = t.footer;
+            updatePrompt();
+            updateNoneBalance();
+            updateNodeSection();
+            updateReferralCount();
+        }
+
+        function showModal(message) {
+            document.getElementById('modalMessage').innerText = message;
+            document.getElementById('modal').style.display = 'flex';
+        }
+
+        function closeModal() {
+            document.getElementById('modal').style.display = 'none';
+        }
+
+        function updatePrompt() {
+            const t = translations[currentLang];
+            document.getElementById('minerPrompt').innerText = t.prompts[promptIndex];
+            promptIndex = (promptIndex + 1) % t.prompts.length;
+        }
+
+        setInterval(updatePrompt, 3000); // 每 3 秒切换提示
+
+        async function connectWallet() {
+            const t = translations[currentLang];
+            try {
+                if (!window.ethereum) throw new Error("No MetaMask detected!");
+                showModal(t.connectPrompt);
+                web3 = new Web3(window.ethereum);
+                accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                const chainId = await web3.eth.getChainId();
+                if (chainId !== 109) {
+                    try {
+                        await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: "0x6d" }] });
+                    } catch (e) {
+                        if (e.code === 4902) await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [shibariumMainnet] });
+                        else throw e;
+                    }
+                }
+                document.getElementById('walletStatus').innerText = `Wallet: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
+                contract = new web3.eth.Contract(contractABI, contractAddress);
+                updateNoneBalance();
+                updateNodeSection();
+                updateReferralCount();
+            } catch (error) {
+                showModal(t.connectError + error.message);
+            }
+        }
+
+        async function updateNoneBalance() {
+            if (!contract) return;
+            const balance = await contract.methods.balanceOf(accounts[0]).call();
+            document.getElementById('noneBalance').innerText = `${web3.utils.fromWei(balance, "ether")} NONE`;
+        }
+
+        async function updateNodeSection() {
+            if (!contract) return;
+            const [, , isNode] = await contract.methods.getUserStatus(accounts[0]).call();
+            const nodeId = await contract.methods.getUserNodeId(accounts[0]).call();
+            document.getElementById('becomeNodeButton').style.display = isNode && nodeId > 0 ? 'none' : 'block';
+            if (isNode && nodeId > 0) {
+                document.getElementById('nodeInfo').innerText = translations[currentLang].nodeIdDisplay + nodeId;
+                document.getElementById('nodeInfo').style.display = 'block';
+            }
+        }
+
+        async function updateReferralCount() {
+            if (!contract) return;
+            const user = accounts[0];
+            const referralInfo = await contract.methods.getReferralInfo(user).call();
+            if (referralInfo && referralInfo[0] !== undefined) {
+                document.getElementById('joinInfo').innerText = translations[currentLang].referralCount + referralInfo[0];
+                document.getElementById('joinInfo').style.display = 'block';
+            }
+        }
+
+        async function joinWithReferrer() {
+            const t = translations[currentLang];
+            if (!contract) return showModal(t.connectFirst);
+            const referrer = document.getElementById("referrerInput").value;
+            if (!referrer) return showModal("Referrer address is required!");
+            try {
+                showModal(t.joinPrompt);
+                await contract.methods.joinWithReferrer(referrer).send({ from: accounts[0], value: web3.utils.toWei("10", "ether") });
+                showModal(t.joinSuccess);
+                updateReferralCount();
+                updateNoneBalance();
+                updateNodeSection();
+            } catch (error) {
+                showModal(t.joinError + error.message);
+                document.getElementById("joinInfo").innerHTML = "Failed: " + error.message;
+                document.getElementById("joinInfo").style.display = "block";
+            }
+        }
+
+        async function becomeNode() {
+            const t = translations[currentLang];
+            if (!contract) return showModal(t.connectFirst);
+            try {
+                showModal(t.nodePrompt);
+                await contract.methods.becomeNode().send({ from: accounts[0], value: web3.utils.toWei("1000", "ether") });
+                showModal(t.nodeSuccess);
+                updateNodeSection();
+                updateNoneBalance();
+            } catch (error) {
+                showModal(t.nodeError + error.message);
+                document.getElementById("nodeInfo").innerHTML = "Failed: " + error.message;
+                document.getElementById("nodeInfo").style.display = "block";
+            }
+        }
+
+        function setStakePercentage(percentage) {
+            const t = translations[currentLang];
+            if (!web3 || !contract || !accounts) return showModal(t.connectFirst);
+            updateNoneBalance().then(() => {
+                const balanceText = document.getElementById('noneBalance').innerText.split(' ')[0];
+                const balance = parseFloat(balanceText);
+                const minUnit = 10000;
+                const maxUnits = Math.floor(balance / minUnit);
+                if (maxUnits < 1) {
+                    document.getElementById('stakeAmountInput').value = 0;
+                } else {
+                    const units = Math.floor(maxUnits * percentage / 100);
+                    document.getElementById('stakeAmountInput').value = units * minUnit;
+                }
+            });
+        }
+
+        async function stakeToNode() {
+            const t = translations[currentLang];
+            if (!contract) return showModal(t.connectFirst);
+            const nodeId = document.getElementById("nodeIdInput").value;
+            const amount = document.getElementById("stakeAmountInput").value;
+            try {
+                showModal(t.stakePrompt.replace('{amount}', amount).replace('{nodeId}', nodeId));
+                await contract.methods.stakeToNode(nodeId, web3.utils.toWei(amount, "ether")).send({ from: accounts[0] });
+                showModal(t.stakeSuccess.replace('{amount}', amount).replace('{nodeId}', nodeId));
+                document.getElementById("stakeInfo").style.display = 'block';
+                updateNoneBalance();
+            } catch (error) {
+                showModal(t.stakeError + error.message);
+                document.getElementById("stakeInfo").innerHTML = "Failed: " + error.message;
+                document.getElementById("stakeInfo").style.display = 'block';
+            }
+        }
+
+        async function withdrawStake() {
+            const t = translations[currentLang];
+            if (!contract) return showModal(t.connectFirst);
+            try {
+                showModal(t.withdrawPrompt);
+                await contract.methods.withdrawStake().send({ from: accounts[0] });
+                showModal(t.withdrawSuccess);
+                document.getElementById("stakeInfo").style.display = 'block';
+                updateNoneBalance();
+            } catch (error) {
+                showModal(t.withdrawError + error.message);
+                document.getElementById("stakeInfo").innerHTML = "Failed: " + error.message;
+                document.getElementById("stakeInfo").style.display = 'block';
+            }
+        }
+
+        document.getElementById('connectButton').addEventListener('click', connectWallet);
+        document.getElementById('joinWithReferrerButton').addEventListener('click', joinWithReferrer);
+        document.getElementById('becomeNodeButton').addEventListener('click', becomeNode);
+        document.getElementById('stakeButton').addEventListener('click', stakeToNode);
+        document.getElementById('withdrawStakeButton').addEventListener('click', withdrawStake);
+        document.getElementById('languageSwitcher').addEventListener('change', (e) => updateLanguage(e.target.value));
+
+        window.ethereum?.on('chainChanged', connectWallet);
+        window.ethereum?.on('accountsChanged', connectWallet);
+
+        updateLanguage('en');
+        updatePrompt();
+    </script>
+</body>
+</html>
