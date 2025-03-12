@@ -14,8 +14,9 @@
         }
         body {
             font-family: 'Arial', sans-serif;
-            background: #2C2F54 url('images/background.png') repeat center top;
-            background-size: contain;
+            background: #2C2F54 url('images/background.png') no-repeat center center fixed;
+            background-size: cover;
+            filter: blur(5px);
             color: #fff;
             line-height: 1.4;
             overflow-x: hidden;
@@ -25,19 +26,10 @@
             min-height: 100vh;
             position: relative;
         }
-        body::before {
-            content: '';
-            position: absolute;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 200px;
-            background: #2C2F54;
-            z-index: 1;
-        }
         .header, .container, footer, .modal {
             position: relative;
             z-index: 2;
+            filter: none;
         }
         .header {
             background: rgba(30, 42, 68, 0.8);
@@ -61,7 +53,7 @@
             display: flex;
             gap: 10px;
         }
-        .language-switcher, .action-btn {
+        .action-btn {
             background: #34495E;
             color: #fff;
             border: none;
@@ -254,11 +246,6 @@
             <div class="actions">
                 <button class="action-btn" onclick="window.open('https://twitter.com', '_blank')"><i class="fab fa-twitter"></i></button>
                 <button class="action-btn" onclick="window.open('https://telegram.org', '_blank')"><i class="fab fa-telegram-plane"></i></button>
-                <select class="language-switcher" id="languageSwitcher">
-                    <option value="en">EN</option>
-                    <option value="zh">ZH</option>
-                    <option value="ja">JA</option>
-                </select>
             </div>
         </div>
         <div class="header-content">
@@ -332,172 +319,20 @@
             rpcUrls: ['https://www.shibrpc.com'],
             blockExplorerUrls: ['https://shibariumscan.io']
         };
-        const translations = {
-            en: {
-                title: "NoneToken Mining Hub",
-                subtitle: "February 20, 2025",
-                connectTitle: "Connect Wallet",
-                walletStatus: "Wallet: Not Connected",
-                joinTitle: "Join Network",
-                joinButton: "Join (10 BONE)",
-                referrerPlaceholder: "Referrer Address",
-                nodeTitle: "Become a Node",
-                nodeButton: "Node (1000 BONE)",
-                stakeTitle: "Stake NONE",
-                stakeButton: "Stake",
-                withdrawButton: "Withdraw",
-                nodeIdPlaceholder: "Node ID (1-2100)",
-                amountPlaceholder: "Amount (Min 10000 NONE)",
-                footer: "Powered by Shibarium © 2025",
-                connectPrompt: "Connecting to your wallet... ⛏️",
-                connectError: "Connection failed: ",
-                joinPrompt: "Joining network with 10 BONE... 💎",
-                joinError: "Join failed: ",
-                joinSuccess: "Joined successfully! Start mining! 🚀",
-                nodePrompt: "Upgrading to node with 1000 BONE... ⚙️",
-                nodeError: "Node upgrade failed: ",
-                nodeSuccess: "Upgraded to node! You're a mining boss! 🎉",
-                stakePrompt: "Staking {amount} NONE to Node {nodeId}... ⛏️",
-                stakeError: "Staking failed: ",
-                stakeSuccess: "Staked {amount} NONE to Node {nodeId}! 💰",
-                withdrawPrompt: "Withdrawing your stake... 💸",
-                withdrawError: "Withdrawal failed: ",
-                withdrawSuccess: "Stake withdrawn with rewards! 🎊",
-                connectFirst: "Please connect your wallet first! 🔧",
-                nodeIdDisplay: "Your Node ID: ",
-                referralCount: "Referrals: ",
-                prompts: [
-                    "⛏️ Miner, ready your pickaxe! Let's dig some NONE!",
-                    "💎 Found any NONE yet? Keep mining, champ!",
-                    "⚡ Power up your rig! NONE awaits you!",
-                    "🚀 Blast off to the NONE mines! Go go go!",
-                    "🔥 Hot streak! Dig deeper for more NONE!",
-                    "💰 Jackpot time! Stake more to win big!",
-                    "⛏️ Swing that pickaxe! NONE is calling!",
-                    "🌟 Shine bright, miner! NONE is your gem!",
-                    "⚙️ Gear up! The NONE mines are open!",
-                    "🎉 Party in the mines! Dig for NONE now!"
-                ]
-            },
-            zh: {
-                title: "NoneToken 挖矿中心",
-                subtitle: "2025年2月20日",
-                connectTitle: "连接钱包",
-                walletStatus: "钱包: 未连接",
-                joinTitle: "加入网络",
-                joinButton: "加入 (10 BONE)",
-                referrerPlaceholder: "推荐人地址",
-                nodeTitle: "成为节点",
-                nodeButton: "节点 (1000 BONE)",
-                stakeTitle: "质押 NONE",
-                stakeButton: "质押",
-                withdrawButton: "撤回",
-                nodeIdPlaceholder: "节点 ID (1-2100)",
-                amountPlaceholder: "数量 (最小 10000 NONE)",
-                footer: "由 Shibarium 驱动 © 2025",
-                connectPrompt: "连接钱包中... ⛏️",
-                connectError: "连接失败: ",
-                joinPrompt: "用10 BONE加入网络... 💎",
-                joinError: "加入失败: ",
-                joinSuccess: "加入成功！开始挖矿！🚀",
-                nodePrompt: "用1000 BONE升级为节点... ⚙️",
-                nodeError: "节点升级失败: ",
-                nodeSuccess: "升级为节点！你是挖矿大佬！🎉",
-                stakePrompt: "将 {amount} NONE 质押到节点 {nodeId}... ⛏️",
-                stakeError: "质押失败: ",
-                stakeSuccess: "已将 {amount} NONE 质押到节点 {nodeId}！💰",
-                withdrawPrompt: "撤回质押中... 💸",
-                withdrawError: "撤回失败: ",
-                withdrawSuccess: "质押已撤回，带奖励！🎊",
-                connectFirst: "请先连接钱包！🔧",
-                nodeIdDisplay: "你的节点 ID: ",
-                referralCount: "邀请人数: ",
-                prompts: [
-                    "⛏️ 矿工，准备好你的镐！开挖 NONE 吧！",
-                    "💎 挖到 NONE 了吗？继续努力，冠军！",
-                    "⚡ 给你的矿机加电！NONE 在等你！",
-                    "🚀 冲向 NONE 矿场！快快快！",
-                    "🔥 热火朝天！挖深点拿更多 NONE！",
-                    "💰 大奖时刻！多质押赢大奖！",
-                    "⛏️ 挥动你的镐！NONE 在召唤！",
-                    "🌟 闪耀吧，矿工！NONE 是你的宝石！",
-                    "⚙️ 装备好！NONE 矿场已开放！",
-                    "🎉 矿场派对！现在就挖 NONE 吧！"
-                ]
-            },
-            ja: {
-                title: "NoneToken マイニングハブ",
-                subtitle: "2025年2月20日",
-                connectTitle: "ウォレットを接続",
-                walletStatus: "ウォレット: 未接続",
-                joinTitle: "ネットワークに参加",
-                joinButton: "参加 (10 BONE)",
-                referrerPlaceholder: "紹介者アドレス",
-                nodeTitle: "ノードになる",
-                nodeButton: "ノード (1000 BONE)",
-                stakeTitle: "NONEをステーク",
-                stakeButton: "ステーク",
-                withdrawButton: "引き出し",
-                nodeIdPlaceholder: "ノード ID (1-2100)",
-                amountPlaceholder: "数量 (最小 10000 NONE)",
-                footer: "Shibarium 提供 © 2025",
-                connectPrompt: "ウォレットに接続中... ⛏️",
-                connectError: "接続失敗: ",
-                joinPrompt: "10 BONEでネットワークに参加中... 💎",
-                joinError: "参加失敗: ",
-                joinSuccess: "参加成功！マイニング開始！🚀",
-                nodePrompt: "1000 BONEでノードにアップグレード中... ⚙️",
-                nodeError: "ノードアップグレード失敗: ",
-                nodeSuccess: "ノードにアップグレード！マイニングボス！🎉",
-                stakePrompt: "{amount} NONEをノード {nodeId} にステーク中... ⛏️",
-                stakeError: "ステーク失敗: ",
-                stakeSuccess: "{amount} NONEをノード {nodeId} にステークしました！💰",
-                withdrawPrompt: "ステークを引き出し中... 💸",
-                withdrawError: "引き出し失敗: ",
-                withdrawSuccess: "ステークが報酬と一緒に引き出されました！🎊",
-                connectFirst: "まずウォレットを接続してください！🔧",
-                nodeIdDisplay: "あなたのノード ID: ",
-                referralCount: "紹介人数: ",
-                prompts: [
-                    "⛏️ マイナー、つるはしを準備！NONEを掘ろう！",
-                    "💎 NONEは見つかった？頑張れ、チャンピオン！",
-                    "⚡ マイニングリグに電力注入！NONEが待ってる！",
-                    "🚀 NONE鉱山へ出発！急げ急げ！",
-                    "🔥 熱いぞ！もっと深く掘ってNONEゲット！",
-                    "💰 大当たり！もっとステークして大勝利！",
-                    "⛏️ つるはしを振れ！NONEが呼んでる！",
-                    "🌟 輝け、マイナー！NONEは君の宝石だ！",
-                    "⚙️ 装備を整えよう！NONE鉱山が開いた！",
-                    "🎉 鉱山パーティー！今すぐNONEを掘ろう！"
-                ]
-            }
-        };
-        let currentLang = 'en';
-        let promptIndex = 0;
 
-        function updateLanguage(lang) {
-            currentLang = lang;
-            const t = translations[lang];
-            document.getElementById('title').innerText = t.title;
-            document.getElementById('subtitle').innerText = t.subtitle;
-            document.getElementById('connectTitle').innerText = t.connectTitle;
-            document.getElementById('walletStatus').innerText = contract ? `Wallet: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}` : t.walletStatus;
-            document.getElementById('joinTitle').innerText = t.joinTitle;
-            document.getElementById('joinWithReferrerButton').innerText = t.joinButton;
-            document.getElementById('referrerInput').placeholder = t.referrerPlaceholder;
-            document.getElementById('nodeTitle').innerText = t.nodeTitle;
-            document.getElementById('becomeNodeButton').innerText = t.nodeButton;
-            document.getElementById('stakeTitle').innerText = t.stakeTitle;
-            document.getElementById('stakeButton').innerText = t.stakeButton;
-            document.getElementById('withdrawStakeButton').innerText = t.withdrawButton;
-            document.getElementById('nodeIdInput').placeholder = t.nodeIdPlaceholder;
-            document.getElementById('stakeAmountInput').placeholder = t.amountPlaceholder;
-            document.getElementById('footer').innerText = t.footer;
-            updatePrompt();
-            updateNoneBalance();
-            updateNodeSection();
-            updateReferralCount();
-        }
+        const prompts = [
+            "⛏️ Miner, ready your pickaxe! Let's dig some NONE!",
+            "💎 Found any NONE yet? Keep mining, champ!",
+            "⚡ Power up your rig! NONE awaits you!",
+            "🚀 Blast off to the NONE mines! Go go go!",
+            "🔥 Hot streak! Dig deeper for more NONE!",
+            "💰 Jackpot time! Stake more to win big!",
+            "⛏️ Swing that pickaxe! NONE is calling!",
+            "🌟 Shine bright, miner! NONE is your gem!",
+            "⚙️ Gear up! The NONE mines are open!",
+            "🎉 Party in the mines! Dig for NONE now!"
+        ];
+        let promptIndex = 0;
 
         function showModal(message) {
             document.getElementById('modalMessage').innerText = message;
@@ -509,9 +344,8 @@
         }
 
         function updatePrompt() {
-            const t = translations[currentLang];
-            document.getElementById('minerPrompt').innerText = t.prompts[promptIndex];
-            promptIndex = (promptIndex + 1) % t.prompts.length;
+            document.getElementById('minerPrompt').innerText = prompts[promptIndex];
+            promptIndex = (promptIndex + 1) % prompts.length;
         }
 
         setInterval(updatePrompt, 3000);
@@ -525,11 +359,11 @@
                     throw new Error("No wallet detected");
                 }
                 connectButton.classList.add('loading');
-                status.innerText = translations[currentLang].connectPrompt;
+                status.innerText = "Connecting to your wallet... ⛏️";
                 web3 = new Web3(window.ethereum);
                 accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 if (!accounts.length) {
-                    throw new Error(translations[currentLang].connectFirst);
+                    throw new Error("Please unlock your wallet or connect it.");
                 }
                 const chainId = await web3.eth.getChainId();
                 if (chainId !== 109) {
@@ -556,7 +390,7 @@
                 updateNodeSection();
                 updateReferralCount();
             } catch (error) {
-                status.innerText = translations[currentLang].connectError + error.message;
+                status.innerText = "Connection failed: " + error.message;
             } finally {
                 connectButton.classList.remove('loading');
             }
@@ -574,7 +408,7 @@
             const nodeId = await contract.methods.getUserNodeId(accounts[0]).call();
             document.getElementById('becomeNodeButton').style.display = isNode && nodeId > 0 ? 'none' : 'block';
             if (isNode && nodeId > 0) {
-                document.getElementById('nodeInfo').innerText = translations[currentLang].nodeIdDisplay + nodeId;
+                document.getElementById('nodeInfo').innerText = "Your Node ID: " + nodeId;
                 document.getElementById('nodeInfo').style.display = 'block';
             }
         }
@@ -584,49 +418,46 @@
             const user = accounts[0];
             const referralInfo = await contract.methods.getReferralInfo(user).call();
             if (referralInfo && referralInfo[0] !== undefined) {
-                document.getElementById('joinInfo').innerText = translations[currentLang].referralCount + referralInfo[0];
+                document.getElementById('joinInfo').innerText = "Referrals: " + referralInfo[0];
                 document.getElementById('joinInfo').style.display = 'block';
             }
         }
 
         async function joinWithReferrer() {
-            const t = translations[currentLang];
-            if (!contract) return showModal(t.connectFirst);
+            if (!contract) return showModal("Please connect your wallet first! 🔧");
             const referrer = document.getElementById("referrerInput").value;
             if (!referrer) return showModal("Referrer address is required!");
             try {
-                showModal(t.joinPrompt);
+                showModal("Joining network with 10 BONE... 💎");
                 await contract.methods.joinWithReferrer(referrer).send({ from: accounts[0], value: web3.utils.toWei("10", "ether") });
-                showModal(t.joinSuccess);
+                showModal("Joined successfully! Start mining! 🚀");
                 updateReferralCount();
                 updateNoneBalance();
                 updateNodeSection();
             } catch (error) {
-                showModal(t.joinError + error.message);
+                showModal("Join failed: " + error.message);
                 document.getElementById("joinInfo").innerHTML = "Failed: " + error.message;
                 document.getElementById("joinInfo").style.display = "block";
             }
         }
 
         async function becomeNode() {
-            const t = translations[currentLang];
-            if (!contract) return showModal(t.connectFirst);
+            if (!contract) return showModal("Please connect your wallet first! 🔧");
             try {
-                showModal(t.nodePrompt);
+                showModal("Upgrading to node with 1000 BONE... ⚙️");
                 await contract.methods.becomeNode().send({ from: accounts[0], value: web3.utils.toWei("1000", "ether") });
-                showModal(t.nodeSuccess);
+                showModal("Upgraded to node! You're a mining boss! 🎉");
                 updateNodeSection();
                 updateNoneBalance();
             } catch (error) {
-                showModal(t.nodeError + error.message);
+                showModal("Node upgrade failed: " + error.message);
                 document.getElementById("nodeInfo").innerHTML = "Failed: " + error.message;
                 document.getElementById("nodeInfo").style.display = "block";
             }
         }
 
         function setStakePercentage(percentage) {
-            const t = translations[currentLang];
-            if (!web3 || !contract || !accounts) return showModal(t.connectFirst);
+            if (!web3 || !contract || !accounts) return showModal("Please connect your wallet first! 🔧");
             updateNoneBalance().then(() => {
                 const balanceText = document.getElementById('noneBalance').innerText.split(' ')[0];
                 const balance = parseFloat(balanceText);
@@ -642,34 +473,32 @@
         }
 
         async function stakeToNode() {
-            const t = translations[currentLang];
-            if (!contract) return showModal(t.connectFirst);
+            if (!contract) return showModal("Please connect your wallet first! 🔧");
             const nodeId = document.getElementById("nodeIdInput").value;
             const amount = document.getElementById("stakeAmountInput").value;
             try {
-                showModal(t.stakePrompt.replace('{amount}', amount).replace('{nodeId}', nodeId));
+                showModal(`Staking ${amount} NONE to Node ${nodeId}... ⛏️`);
                 await contract.methods.stakeToNode(nodeId, web3.utils.toWei(amount, "ether")).send({ from: accounts[0] });
-                showModal(t.stakeSuccess.replace('{amount}', amount).replace('{nodeId}', nodeId));
+                showModal(`Staked ${amount} NONE to Node ${nodeId}! 💰`);
                 document.getElementById("stakeInfo").style.display = 'block';
                 updateNoneBalance();
             } catch (error) {
-                showModal(t.stakeError + error.message);
+                showModal("Staking failed: " + error.message);
                 document.getElementById("stakeInfo").innerHTML = "Failed: " + error.message;
                 document.getElementById("stakeInfo").style.display = 'block';
             }
         }
 
         async function withdrawStake() {
-            const t = translations[currentLang];
-            if (!contract) return showModal(t.connectFirst);
+            if (!contract) return showModal("Please connect your wallet first! 🔧");
             try {
-                showModal(t.withdrawPrompt);
+                showModal("Withdrawing your stake... 💸");
                 await contract.methods.withdrawStake().send({ from: accounts[0] });
-                showModal(t.withdrawSuccess);
+                showModal("Stake withdrawn with rewards! 🎊");
                 document.getElementById("stakeInfo").style.display = 'block';
                 updateNoneBalance();
             } catch (error) {
-                showModal(t.withdrawError + error.message);
+                showModal("Withdrawal failed: " + error.message);
                 document.getElementById("stakeInfo").innerHTML = "Failed: " + error.message;
                 document.getElementById("stakeInfo").style.display = 'block';
             }
@@ -680,7 +509,6 @@
         document.getElementById('becomeNodeButton').addEventListener('click', becomeNode);
         document.getElementById('stakeButton').addEventListener('click', stakeToNode);
         document.getElementById('withdrawStakeButton').addEventListener('click', withdrawStake);
-        document.getElementById('languageSwitcher').addEventListener('change', (e) => updateLanguage(e.target.value));
 
         window.ethereum?.on('chainChanged', (chainId) => {
             if (parseInt(chainId, 16) !== 109) {
