@@ -141,9 +141,14 @@
             cursor: pointer;
             font-size: 0.9em;
             transition: background 0.3s;
+            touch-action: manipulation;
         }
         button:hover {
             background: #E07A5F;
+        }
+        button.loading {
+            opacity: 0.7;
+            pointer-events: none;
         }
         .input-group {
             display: flex;
@@ -189,6 +194,11 @@
             border-radius: 10px;
             margin-top: 10px;
             font-size: 0.8em;
+        }
+        .status {
+            margin-top: 10px;
+            font-size: 0.9em;
+            color: #F4A261;
         }
         .modal {
             display: none;
@@ -264,7 +274,8 @@
             <div class="button-group">
                 <button id="connectButton">Connect</button>
             </div>
-            <div id="walletStatus" class="info-panel">Wallet: Not Connected</div>
+            <p>Wallet: <span id="walletAddress">Not connected</span></p>
+            <div id="networkStatus" class="status">Click to connect...</div>
         </div>
         <div class="section">
             <div class="section-title" id="joinTitle">Join Network</div>
@@ -506,28 +517,48 @@
         setInterval(updatePrompt, 3000);
 
         async function connectWallet() {
-            const t = translations[currentLang];
+            const status = document.getElementById('networkStatus');
+            const connectButton = document.getElementById('connectButton');
             try {
-                if (!window.ethereum) throw new Error("No MetaMask detected!");
-                showModal(t.connectPrompt);
+                if (!window.ethereum) {
+                    status.innerHTML = 'No wallet detected. Please install <a href="https://metamask.io" target="_blank">MetaMask</a> and run via a local server (e.g., "npx serve").';
+                    throw new Error("No wallet detected");
+                }
+                connectButton.classList.add('loading');
+                status.innerText = translations[currentLang].connectPrompt;
                 web3 = new Web3(window.ethereum);
                 accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
+                if (!accounts.length) {
+                    throw new Error(translations[currentLang].connectFirst);
+                }
                 const chainId = await web3.eth.getChainId();
                 if (chainId !== 109) {
                     try {
-                        await window.ethereum.request({ method: 'wallet_switchEthereumChain', params: [{ chainId: "0x6d" }] });
-                    } catch (e) {
-                        if (e.code === 4902) await window.ethereum.request({ method: 'wallet_addEthereumChain', params: [shibariumMainnet] });
-                        else throw e;
+                        await window.ethereum.request({
+                            method: 'wallet_switchEthereumChain',
+                            params: [{ chainId: "0x6d" }]
+                        });
+                    } catch (switchError) {
+                        if (switchError.code === 4902) {
+                            await window.ethereum.request({
+                                method: 'wallet_addEthereumChain',
+                                params: [shibariumMainnet]
+                            });
+                        } else {
+                            throw switchError;
+                        }
                     }
                 }
-                document.getElementById('walletStatus').innerText = `Wallet: ${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
+                document.getElementById('walletAddress').innerText = `${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
                 contract = new web3.eth.Contract(contractABI, contractAddress);
+                status.innerText = "Connected to Shibarium";
                 updateNoneBalance();
                 updateNodeSection();
                 updateReferralCount();
             } catch (error) {
-                showModal(t.connectError + error.message);
+                status.innerText = translations[currentLang].connectError + error.message;
+            } finally {
+                connectButton.classList.remove('loading');
             }
         }
 
@@ -573,7 +604,7 @@
             } catch (error) {
                 showModal(t.joinError + error.message);
                 document.getElementById("joinInfo").innerHTML = "Failed: " + error.message;
-                document.getElementById("joinInfo").style.display = 'block';
+                document.getElementById("joinInfo").style.display = "block";
             }
         }
 
@@ -589,7 +620,7 @@
             } catch (error) {
                 showModal(t.nodeError + error.message);
                 document.getElementById("nodeInfo").innerHTML = "Failed: " + error.message;
-                document.getElementById("nodeInfo").style.display = 'block';
+                document.getElementById("nodeInfo").style.display = "block";
             }
         }
 
@@ -650,10 +681,38 @@
         document.getElementById('stakeButton').addEventListener('click', stakeToNode);
         document.getElementById('withdrawStakeButton').addEventListener('click', withdrawStake);
         document.getElementById('languageSwitcher').addEventListener('change', (e) => updateLanguage(e.target.value));
-        window.ethereum?.on('chainChanged', connectWallet);
-        window.ethereum?.on('accountsChanged', connectWallet);
-        updateLanguage('en');
-        updatePrompt();
+
+        window.ethereum?.on('chainChanged', (chainId) => {
+            if (parseInt(chainId, 16) !== 109) {
+                document.getElementById('networkStatus').innerText = "Switched to wrong network. Please reconnect to Shibarium.";
+                web3 = null;
+                contract = null;
+                accounts = null;
+                document.getElementById('walletAddress').innerText = "Not connected";
+            } else {
+                connectWallet();
+            }
+        });
+
+        window.ethereum?.on('accountsChanged', (newAccounts) => {
+            if (newAccounts.length) {
+                connectWallet();
+            } else {
+                document.getElementById('networkStatus').innerText = "Wallet disconnected. Please reconnect.";
+                web3 = null;
+                contract = null;
+                accounts = null;
+                document.getElementById('walletAddress').innerText = "Not connected";
+            }
+        });
+
+        window.addEventListener('load', () => {
+            if (!window.location.protocol.startsWith('http')) {
+                document.getElementById('networkStatus').innerHTML = 'Please run this page via a local server (e.g., "npx serve") to connect MetaMask.';
+            } else if (!window.ethereum) {
+                document.getElementById('networkStatus').innerHTML = 'No wallet detected. Please install <a href="https://metamask.io" target="_blank">MetaMask</a>.';
+            }
+        });
     </script>
 </body>
 </html>
