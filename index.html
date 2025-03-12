@@ -14,7 +14,7 @@
         }
         body {
             font-family: 'Arial', sans-serif;
-            background: #2C2F54 url('images/background.png') no-repeat center center fixed;
+            background: url('images/background.png') no-repeat center center fixed;
             background-size: cover;
             filter: blur(5px);
             color: #fff;
@@ -32,7 +32,6 @@
             filter: none; /* 主体内容不模糊 */
         }
         .header {
-            background: rgba(30, 42, 68, 0.6);
             padding: 10px 0;
             text-align: center;
             width: 100%;
@@ -42,7 +41,6 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 15px;
-            background: rgba(30, 33, 61, 0.6);
             height: 40px;
         }
         .header-top .balance {
@@ -315,13 +313,9 @@
         const shibariumMainnet = {
             chainId: 109,
             chainName: 'Shibarium',
-            nativeCurrency: {
-                name: 'BONE',
-                symbol: 'BONE',
-                decimals: 18,
-            },
+            nativeCurrency: { name: 'BONE', symbol: 'BONE', decimals: 18 },
             rpcUrls: ['https://www.shibrpc.com'],
-            blockExplorerUrls: ['https://shibariumscan.io'],
+            blockExplorerUrls: ['https://shibariumscan.io']
         };
 
         const prompts = [
