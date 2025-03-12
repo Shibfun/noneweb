@@ -100,14 +100,14 @@
             margin-bottom: 10px;
             animation: fade 3s infinite;
         }
-        .pending-none {
+        .reward-none {
             font-size: 0.9em;
             color: #E07A5F;
             text-align: center;
             cursor: pointer;
             transition: color 0.3s;
         }
-        .pending-none:hover {
+        .reward-none:hover {
             color: #F4A261;
         }
         @keyframes fade {
@@ -271,7 +271,7 @@
             <h2 id="subtitle">Mining on Shibarium</h2>
             <div class="miner-gif"></div>
             <div class="miner-prompt" id="minerPrompt"></div>
-            <div class="pending-none" id="pendingNone" onclick="claimReferralReward()">Pending: 0 NONE</div>
+            <div class="reward-none" id="rewardNone" onclick="claimReferralReward()">Reward: 0 NONE</div>
         </div>
     </div>
     <div class="container">
@@ -371,17 +371,17 @@
             promptIndex = (promptIndex + 1) % prompts.length;
         }
 
-        async function updatePendingNone() {
+        async function updateRewardNone() {
             if (!web3 || !contract || !accounts) {
-                document.getElementById('pendingNone').innerText = 'Pending: 0 NONE';
+                document.getElementById('rewardNone').innerText = 'Reward: 0 NONE';
                 return;
             }
             try {
-                const rewardInfo = await contract.methods.getRewardInfo(accounts[0]).call();
-                const pendingReward = web3.utils.fromWei(rewardInfo[0], 'ether');
-                document.getElementById('pendingNone').innerText = `Pending: ${parseFloat(pendingReward).toFixed(2)} NONE`;
+                const referralInfo = await contract.methods.getReferralInfo(accounts[0]).call();
+                const reward = web3.utils.fromWei(referralInfo[1], 'ether');
+                document.getElementById('rewardNone').innerText = `Reward: ${parseFloat(reward).toFixed(2)} NONE`;
             } catch (error) {
-                document.getElementById('pendingNone').innerText = 'Pending: 0 NONE';
+                document.getElementById('rewardNone').innerText = 'Reward: 0 NONE';
             }
         }
 
@@ -395,7 +395,7 @@
         }
 
         setInterval(updatePrompt, 3000);
-        setInterval(updatePendingNone, 5000);
+        setInterval(updateRewardNone, 5000);
 
         async function connectWallet() {
             const connectButton = document.getElementById('connectButton');
@@ -436,7 +436,7 @@
                 updateNoneBalance();
                 updateJoinSection();
                 updateNodeSection();
-                updatePendingNone();
+                updateRewardNone();
             } catch (error) {
                 showModal(`Connection failed: ${error.message}`);
             } finally {
