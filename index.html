@@ -221,6 +221,7 @@
             border-radius: 10px;
             margin-top: 10px;
             font-size: 0.8em;
+            color: #fff; /* 确保文字颜色一致 */
         }
         .status {
             margin-top: 10px;
@@ -256,11 +257,6 @@
             padding: 8px 15px;
             border-radius: 20px;
             font-size: 0.9em;
-        }
-        .my-stakes {
-            margin-top: 10px;
-            font-size: 0.9em;
-            color: #E07A5F;
         }
         footer {
             background: rgba(30, 42, 68, 0.8);
@@ -310,7 +306,7 @@
             <div class="button-group">
                 <button id="connectButton">Connect MetaMask</button>
             </div>
-            <p>Wallet: <span id="walletAddress">Not connected</span></p>
+            <div class="info-panel">Wallet: <span id="walletAddress">Not connected</span></div>
         </div>
         <div class="section" id="joinSection">
             <div class="section-title" id="joinTitle">Join Network</div>
@@ -343,7 +339,7 @@
                 <button class="percentage-btn" onclick="setStakePercentage(75)">75%</button>
                 <button class="percentage-btn" onclick="setStakePercentage(100)">100%</button>
             </div>
-            <div class="my-stakes" id="myStakes">My Stakes: None</div>
+            <div class="info-panel" id="myStakes">My Stakes: None</div>
         </div>
     </div>
     <footer id="footer">Powered by Shibarium © 2025</footer>
