@@ -29,10 +29,10 @@
         .header, .container, footer, .modal {
             position: relative;
             z-index: 2;
-            filter: none;
+            filter: none; /* 主体内容不模糊 */
         }
         .header {
-            background: rgba(30, 42, 68, 0.8);
+            background: rgba(30, 42, 68, 0.6);
             padding: 10px 0;
             text-align: center;
             width: 100%;
@@ -42,7 +42,7 @@
             justify-content: space-between;
             align-items: center;
             padding: 0 15px;
-            background: rgba(30, 33, 61, 0.8);
+            background: rgba(30, 33, 61, 0.6);
             height: 40px;
         }
         .header-top .balance {
@@ -259,7 +259,7 @@
         <div class="section">
             <div class="section-title" id="connectTitle">Connect Wallet</div>
             <div class="button-group">
-                <button id="connectButton">Connect</button>
+                <button id="connectButton">Connect MetaMask</button>
             </div>
             <p>Wallet: <span id="walletAddress">Not connected</span></p>
             <div id="networkStatus" class="status">Click to connect...</div>
@@ -315,9 +315,13 @@
         const shibariumMainnet = {
             chainId: 109,
             chainName: 'Shibarium',
-            nativeCurrency: { name: 'BONE', symbol: 'BONE', decimals: 18 },
+            nativeCurrency: {
+                name: 'BONE',
+                symbol: 'BONE',
+                decimals: 18,
+            },
             rpcUrls: ['https://www.shibrpc.com'],
-            blockExplorerUrls: ['https://shibariumscan.io']
+            blockExplorerUrls: ['https://shibariumscan.io'],
         };
 
         const prompts = [
@@ -359,7 +363,7 @@
                     throw new Error("No wallet detected");
                 }
                 connectButton.classList.add('loading');
-                status.innerText = "Connecting to your wallet... ⛏️";
+                status.innerText = "Connecting...";
                 web3 = new Web3(window.ethereum);
                 accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
                 if (!accounts.length) {
@@ -388,50 +392,48 @@
                 status.innerText = "Connected to Shibarium";
                 updateNoneBalance();
                 updateNodeSection();
-                updateReferralCount();
             } catch (error) {
-                status.innerText = "Connection failed: " + error.message;
+                console.error(error);
+                status.innerText = "Failed to connect: " + error.message;
             } finally {
                 connectButton.classList.remove('loading');
             }
         }
 
         async function updateNoneBalance() {
-            if (!contract) return;
+            if (!web3 || !contract || !accounts) return;
             const balance = await contract.methods.balanceOf(accounts[0]).call();
             document.getElementById('noneBalance').innerText = `${web3.utils.fromWei(balance, "ether")} NONE`;
         }
 
         async function updateNodeSection() {
-            if (!contract) return;
+            if (!web3 || !contract || !accounts) return;
             const [, , isNode] = await contract.methods.getUserStatus(accounts[0]).call();
             const nodeId = await contract.methods.getUserNodeId(accounts[0]).call();
-            document.getElementById('becomeNodeButton').style.display = isNode && nodeId > 0 ? 'none' : 'block';
             if (isNode && nodeId > 0) {
                 document.getElementById('nodeInfo').innerText = "Your Node ID: " + nodeId;
                 document.getElementById('nodeInfo').style.display = 'block';
-            }
-        }
-
-        async function updateReferralCount() {
-            if (!contract) return;
-            const user = accounts[0];
-            const referralInfo = await contract.methods.getReferralInfo(user).call();
-            if (referralInfo && referralInfo[0] !== undefined) {
-                document.getElementById('joinInfo').innerText = "Referrals: " + referralInfo[0];
-                document.getElementById('joinInfo').style.display = 'block';
+                document.getElementById('becomeNodeButton').style.display = 'none';
+            } else {
+                document.getElementById('nodeInfo').style.display = 'none';
+                document.getElementById('becomeNodeButton').style.display = 'block';
             }
         }
 
         async function joinWithReferrer() {
-            if (!contract) return showModal("Please connect your wallet first! 🔧");
+            if (!web3 || !contract || !accounts) {
+                showModal("Please connect your wallet first! 🔧");
+                return;
+            }
             const referrer = document.getElementById("referrerInput").value;
-            if (!referrer) return showModal("Referrer address is required!");
+            if (!referrer) {
+                showModal("Referrer address is required!");
+                return;
+            }
             try {
                 showModal("Joining network with 10 BONE... 💎");
                 await contract.methods.joinWithReferrer(referrer).send({ from: accounts[0], value: web3.utils.toWei("10", "ether") });
                 showModal("Joined successfully! Start mining! 🚀");
-                updateReferralCount();
                 updateNoneBalance();
                 updateNodeSection();
             } catch (error) {
@@ -442,7 +444,10 @@
         }
 
         async function becomeNode() {
-            if (!contract) return showModal("Please connect your wallet first! 🔧");
+            if (!web3 || !contract || !accounts) {
+                showModal("Please connect your wallet first! 🔧");
+                return;
+            }
             try {
                 showModal("Upgrading to node with 1000 BONE... ⚙️");
                 await contract.methods.becomeNode().send({ from: accounts[0], value: web3.utils.toWei("1000", "ether") });
@@ -457,7 +462,10 @@
         }
 
         function setStakePercentage(percentage) {
-            if (!web3 || !contract || !accounts) return showModal("Please connect your wallet first! 🔧");
+            if (!web3 || !contract || !accounts) {
+                showModal("Please connect your wallet first! 🔧");
+                return;
+            }
             updateNoneBalance().then(() => {
                 const balanceText = document.getElementById('noneBalance').innerText.split(' ')[0];
                 const balance = parseFloat(balanceText);
@@ -473,7 +481,10 @@
         }
 
         async function stakeToNode() {
-            if (!contract) return showModal("Please connect your wallet first! 🔧");
+            if (!web3 || !contract || !accounts) {
+                showModal("Please connect your wallet first! 🔧");
+                return;
+            }
             const nodeId = document.getElementById("nodeIdInput").value;
             const amount = document.getElementById("stakeAmountInput").value;
             try {
@@ -490,7 +501,10 @@
         }
 
         async function withdrawStake() {
-            if (!contract) return showModal("Please connect your wallet first! 🔧");
+            if (!web3 || !contract || !accounts) {
+                showModal("Please connect your wallet first! 🔧");
+                return;
+            }
             try {
                 showModal("Withdrawing your stake... 💸");
                 await contract.methods.withdrawStake().send({ from: accounts[0] });
