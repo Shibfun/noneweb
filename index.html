@@ -36,7 +36,7 @@
             filter: blur(5px);
             z-index: -1;
         }
-        .header, .container, footer {
+        .header, .container, footer, .risk-warning {
             position: relative;
             z-index: 1;
             width: 100%;
@@ -194,6 +194,14 @@
             padding: 12px 40px;
             margin-top: 20px;
         }
+        .risk-warning {
+            background: rgba(30, 42, 68, 0.9);
+            padding: 15px;
+            text-align: center;
+            font-size: 0.9em;
+            color: #fff;
+            margin-top: 20px;
+        }
         footer {
             background: rgba(30, 42, 68, 0.8);
             text-align: center;
@@ -201,7 +209,7 @@
             width: 100%;
             color: #A8B5D4;
             font-size: 0.9em;
-            margin-top: 30px;
+            margin-top: 10px;
         }
         footer a {
             color: #F4A261;
@@ -222,6 +230,7 @@
             .mining-link-btn, .mining-secondary-btn, .cta-button { font-size: 0.9em; padding: 10px 20px; }
             .header-top .logo { font-size: 1.2em; }
             .social-btn { padding: 6px 10px; }
+            .risk-warning { font-size: 0.85em; }
         }
         @media (max-width: 480px) {
             .header-content h1 { font-size: 1.6em; }
@@ -230,6 +239,7 @@
             .section-title { font-size: 1.2em; }
             .section-text { font-size: 0.85em; }
             .mining-link-btn, .mining-secondary-btn, .cta-button { font-size: 0.8em; padding: 8px 15px; }
+            .risk-warning { font-size: 0.8em; padding: 10px; }
         }
     </style>
 </head>
@@ -338,6 +348,10 @@
             </div>
             <button class="cta-button" onclick="window.open('https://shibfun.github.io/none/', '_blank')">Explore Now</button>
         </div>
+    </div>
+
+    <div class="risk-warning">
+        <p>⚠️ Risk Warning 😕: The NONE team reserves the right to modify mainnet content, including roadmap, mainnet name, and whether deflation occurs proportionally or otherwise.</p>
     </div>
 
     <footer>
