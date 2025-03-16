@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoneToken DApp</title>
+    <title>NoneChain - Shibarium's Layer 3 Titan</title>
     <link rel="icon" type="image/png" href="images/none.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -18,7 +18,7 @@
             background-size: cover;
             position: relative;
             color: #fff;
-            line-height: 1.4;
+            line-height: 1.6;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
@@ -36,759 +36,285 @@
             filter: blur(5px);
             z-index: -1;
         }
-        .header, .container, footer, .modal {
+        .header, .content, footer {
             position: relative;
             z-index: 1;
+            width: 100%;
         }
         .header {
-            padding: 10px 0;
+            padding: 20px 0;
             text-align: center;
-            width: 100%;
+            background: rgba(44, 62, 80, 0.95);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 15px;
-            height: 40px;
+            padding: 0 30px;
+            height: 60px;
         }
-        .header-top .balance {
-            font-size: 1.1em;
+        .header-top .logo {
+            font-size: 1.8em;
             color: #F4A261;
+            font-weight: bold;
+            text-transform: uppercase;
+            letter-spacing: 2px;
         }
-        .header-top .actions {
+        .header-top .socials {
             display: flex;
-            gap: 10px;
+            gap: 20px;
         }
-        .action-btn {
+        .social-btn {
             background: #34495E;
             color: #fff;
             border: none;
-            padding: 5px 10px;
-            border-radius: 10px;
-            font-size: 0.8em;
+            padding: 10px 15px;
+            border-radius: 12px;
+            font-size: 1.2em;
             cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
         }
-        .action-btn i {
-            font-size: 1em;
+        .social-btn:hover {
+            background: #F4A261;
+            transform: scale(1.1);
         }
         .header-content {
-            padding: 20px 0;
+            padding: 60px 0;
         }
         .header-content h1 {
-            font-size: 1.5em;
+            font-size: 4em;
             color: #F4A261;
             text-transform: uppercase;
-            margin-bottom: 5px;
+            margin-bottom: 15px;
+            text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.7);
         }
-        .profile-section {
-            display: flex;
-            align-items: center;
-            justify-content: center;
-            margin-bottom: 10px;
-        }
-        .avatar {
-            width: 24px;
-            height: 24px;
-            border-radius: 50%;
-            margin-right: 8px;
-        }
-        .nickname {
-            font-size: 1em;
-            font-weight: bold;
+        .header-content p {
+            font-size: 1.5em;
             color: #A8B5D4;
-            margin-right: 5px;
+            max-width: 900px;
+            margin: 0 auto;
         }
-        .v-icon {
-            width: 16px;
-            height: 16px;
-            vertical-align: middle;
-        }
-        .miner-gif {
-            width: 80px;
-            height: 80px;
-            background: url('images/miner.gif') no-repeat center;
-            background-size: contain;
-            margin: 0 auto 10px;
-        }
-        .miner-prompt {
-            font-size: 0.8em;
-            color: #F4A261;
-            text-align: center;
-            margin-bottom: 10px;
-            animation: fade 3s infinite;
-        }
-        .reward-none {
-            font-size: 0.9em;
-            color: #E07A5F;
-            text-align: center;
-            cursor: pointer;
-            transition: color 0.3s;
-        }
-        .reward-none:hover {
-            color: #F4A261;
-        }
-        @keyframes fade {
-            0%, 100% { opacity: 0.7; }
-            50% { opacity: 1; }
-        }
-        .container {
-            width: 100%;
-            max-width: 400px;
-            padding: 0 10px;
+        .content {
+            max-width: 1400px;
+            padding: 0 30px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 15px;
+            gap: 50px;
         }
         .section {
             background: rgba(44, 62, 80, 0.9);
-            padding: 15px;
-            border-radius: 15px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
+            padding: 40px;
+            border-radius: 20px;
+            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
             text-align: center;
         }
         .section-title {
-            font-size: 1.1em;
+            font-size: 2.5em;
             color: #F4A261;
-            margin-bottom: 10px;
+            margin-bottom: 25px;
+            text-transform: uppercase;
+            letter-spacing: 1px;
         }
-        .button-group {
-            display: flex;
-            justify-content: center;
-            gap: 10px;
-            margin-top: 10px;
-        }
-        button {
-            background: #F4A261;
+        .intro-text {
+            font-size: 1.2em;
             color: #fff;
-            border: none;
-            padding: 8px 15px;
-            border-radius: 20px;
-            cursor: pointer;
-            font-size: 0.9em;
-            transition: background 0.3s;
-            touch-action: manipulation;
+            max-width: 1000px;
+            margin: 0 auto;
         }
-        button:hover {
-            background: #E07A5F;
+        .roadmap-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
         }
-        button.loading {
-            opacity: 0.7;
-            pointer-events: none;
-        }
-        .input-group {
-            display: flex;
-            flex-direction: column;
-            gap: 8px;
-            margin: 10px 0;
-        }
-        input {
-            padding: 8px;
-            border: none;
-            border-radius: 10px;
+        .roadmap-item {
             background: #34495E;
-            color: #fff;
-            font-size: 0.9em;
-            text-align: center;
-        }
-        input:focus {
-            outline: none;
-            box-shadow: 0 0 3px #F4A261;
-        }
-        .percentage-buttons {
-            display: flex;
-            justify-content: center;
-            gap: 5px;
-            margin: 10px 0;
-        }
-        .percentage-btn {
-            background: #F4A261;
-            color: #fff;
-            border: none;
-            padding: 6px 10px;
+            padding: 25px;
             border-radius: 15px;
-            font-size: 0.8em;
-            cursor: pointer;
-            transition: background 0.3s;
+            transition: transform 0.3s, box-shadow 0.3s;
         }
-        .percentage-btn:hover {
-            background: #E07A5F;
+        .roadmap-item:hover {
+            transform: translateY(-8px);
+            box-shadow: 0 5px 15px rgba(244, 162, 97, 0.5);
         }
-        .info-panel {
-            background: #34495E;
-            padding: 10px;
-            border-radius: 10px;
-            margin-top: 10px;
-            font-size: 0.8em;
-            color: #fff; /* 确保文字颜色一致 */
-        }
-        .status {
-            margin-top: 10px;
-            font-size: 0.9em;
+        .roadmap-item h3 {
+            font-size: 1.5em;
             color: #F4A261;
-        }
-        .modal {
-            display: none;
-            position: fixed;
-            top: 0;
-            left: 0;
-            width: 100%;
-            height: 100%;
-            background: rgba(0, 0, 0, 0.7);
-            justify-content: center;
-            align-items: center;
-        }
-        .modal-content {
-            background: #2C3E50;
-            padding: 20px;
-            border-radius: 15px;
-            text-align: center;
-            color: #fff;
-            max-width: 300px;
-            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
-        }
-        .modal-content p {
             margin-bottom: 15px;
-            font-size: 1em;
         }
-        .modal-content button {
+        .roadmap-item p {
+            font-size: 1em;
+            color: #A8B5D4;
+        }
+        .features-list {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 25px;
+            margin-top: 25px;
+        }
+        .feature-item {
+            background: #34495E;
+            padding: 25px;
+            border-radius: 15px;
+            font-size: 1.1em;
+            transition: background 0.3s;
+        }
+        .feature-item:hover {
+            background: #3D5A74;
+        }
+        .feature-item strong {
+            color: #F4A261;
+            font-size: 1.2em;
+        }
+        .cta-button {
             background: #F4A261;
-            padding: 8px 15px;
-            border-radius: 20px;
-            font-size: 0.9em;
+            color: #fff;
+            border: none;
+            padding: 15px 40px;
+            border-radius: 25px;
+            font-size: 1.4em;
+            font-weight: bold;
+            cursor: pointer;
+            transition: background 0.3s, transform 0.3s;
+            display: inline-block;
+            margin-top: 25px;
+        }
+        .cta-button:hover {
+            background: #E07A5F;
+            transform: scale(1.05);
         }
         footer {
-            background: rgba(30, 42, 68, 0.8);
+            background: rgba(30, 42, 68, 0.9);
             text-align: center;
-            padding: 10px;
-            width: 100%;
+            padding: 30px;
             color: #A8B5D4;
-            font-size: 0.8em;
-            margin-top: 20px;
+            font-size: 1em;
         }
-        @media (max-width: 480px) {
-            .header-content h1 { font-size: 1.3em; }
-            .miner-gif { width: 60px; height: 60px; }
-            button { padding: 6px 12px; font-size: 0.8em; }
-            input { font-size: 0.8em; }
-            .miner-prompt { font-size: 0.7em; }
-            .avatar { width: 20px; height: 20px; }
-            .nickname { font-size: 0.9em; }
-            .v-icon { width: 14px; height: 14px; }
+        footer a {
+            color: #F4A261;
+            text-decoration: none;
+            transition: color 0.3s;
+        }
+        footer a:hover {
+            color: #E07A5F;
+        }
+        @media (max-width: 768px) {
+            .header-content h1 { font-size: 2.5em; }
+            .header-content p { font-size: 1.2em; }
+            .section-title { font-size: 1.8em; }
+            .cta-button { font-size: 1.2em; padding: 12px 30px; }
+            .header-top .logo { font-size: 1.3em; }
+            .social-btn { padding: 8px 12px; font-size: 1em; }
         }
     </style>
 </head>
 <body>
     <div class="header">
         <div class="header-top">
-            <span id="noneBalance">0 NONE</span>
-            <div class="actions">
-                <button class="action-btn" onclick="window.open('https://x.com/NoneMiner', '_blank')"><i class="fab fa-twitter"></i></button>
-                <button class="action-btn" onclick="window.open('https://t.me/NoneMiners', '_blank')"><i class="fab fa-telegram-plane"></i></button>
+            <span class="logo">NoneChain</span>
+            <div class="socials">
+                <button class="social-btn" onclick="window.open('https://x.com/NoneChain', '_blank')"><i class="fab fa-twitter"></i></button>
+                <button class="social-btn" onclick="window.open('https://t.me/NoneChain', '_blank')"><i class="fab fa-telegram-plane"></i></button>
+                <button class="social-btn" onclick="window.open('https://discord.gg/nonechain', '_blank')"><i class="fab fa-discord"></i></button>
             </div>
         </div>
         <div class="header-content">
-            <h1 id="title">NoneToken DApp</h1>
-            <div class="profile-section">
-                <img class="avatar" id="userAvatar" src="images/default-avatar.png" alt="Avatar">
-                <span class="nickname" id="userNickname">Woof Wallet</span>
-                <img class="v-icon" id="vIcon" src="" alt="" style="display: none;">
-            </div>
-            <div class="miner-gif"></div>
-            <div class="miner-prompt" id="minerPrompt"></div>
-            <div class="reward-none" id="rewardNone" onclick="claimReferralReward()">Reward: 0 NONE</div>
+            <h1>NoneChain</h1>
+            <p>Shibarium’s Layer 3 Behemoth - The Cosmic Apex of Web3 Supremacy</p>
         </div>
     </div>
-    <div class="container">
+
+    <div class="content">
         <div class="section">
-            <div class="section-title" id="connectTitle">Connect Wallet</div>
-            <div class="button-group">
-                <button id="connectButton">Connect MetaMask</button>
-            </div>
-            <div class="info-panel">Wallet: <span id="walletAddress">Not connected</span></div>
+            <div class="section-title">Welcome to NoneChain</div>
+            <p class="intro-text">
+                Anchored on Shibarium at 
+                <a href="https://www.shibariumscan.io/token/0x64E19b6a167878d2483d166212A3c2c68b1eB842" target="_blank" style="color: #F4A261;">
+                    0x64E19b6a167878d2483d166212A3c2c68b1eB842
+                </a>, 
+                NoneChain transcends Layer 3 limits to forge an interstellar empire for the Shiba Army. 
+                With quantum-level speeds, astronomical staking yields, and a trillion-dollar vision, 
+                we’re the unrivaled titan rewriting the Web3 cosmos—fueled by $NONE, the Shiba crown jewel.
+            </p>
         </div>
-        <div class="section" id="joinSection">
-            <div class="section-title" id="joinTitle">Join Network</div>
-            <div class="button-group">
-                <button id="joinWithReferrerButton">Join (10 BONE)</button>
-            </div>
-            <div class="input-group">
-                <input type="text" id="referrerInput" placeholder="Referrer Address">
-            </div>
-        </div>
-        <div class="section" id="nodeSection">
-            <div class="section-title" id="nodeTitle">Become a Node</div>
-            <div class="button-group" id="nodeButtonGroup">
-                <button id="becomeNodeButton">Node (1000 BONE)</button>
-            </div>
-        </div>
+
         <div class="section">
-            <div class="section-title" id="stakeTitle">Stake NONE</div>
-            <div class="button-group">
-                <button id="stakeButton">Stake</button>
-                <button id="withdrawStakeButton">Withdraw</button>
+            <div class="section-title">Cosmic Roadmap</div>
+            <div class="roadmap-grid">
+                <div class="roadmap-item">
+                    <h3>Q1 2025 - Quantum Dawn</h3>
+                    <p>
+                        Testnet explodes on Shibarium Orbit. $NONE staking ignites with 100% APR teaser—shattering all records.
+                    </p>
+                </div>
+                <div class="roadmap-item">
+                    <h3>Q2 2025 - Galactic Mainnet</h3>
+                    <p>
+                        Mainnet roars live—$NONE reigns as Gas overlord. Shiba Nebula bridge obliterates Ethereum barriers.
+                    </p>
+                </div>
+                <div class="roadmap-item">
+                    <h3>Q3 2025 - Stellar Ascension</h3>
+                    <p>
+                        SDK unleashes DApp creation at warp speed. 2100 Titan Nodes forge an invincible trillion-dollar fortress.
+                    </p>
+                </div>
+                <div class="roadmap-item">
+                    <h3>Q4 2025 - Universal Conquest</h3>
+                    <p>
+                        10M daily users crown NoneChain king. 50B $NONE “Bone Tsunami” buries rivals in Shiba glory.
+                    </p>
+                </div>
             </div>
-            <div class="input-group">
-                <input type="text" id="nodeIdInput" placeholder="Node ID (1-2100)">
-                <input type="text" id="stakeAmountInput" placeholder="Amount (Min 10000 NONE)">
+        </div>
+
+        <div class="section">
+            <div class="section-title">Unmatched Supremacy</div>
+            <div class="features-list">
+                <div class="feature-item">
+                    <strong>Shiba Nebula Bridge</strong><br>
+                    $NONE teleports from Shibarium’s core to NoneChain’s throne—cross-chain redefined.
+                </div>
+                <div class="feature-item">
+                    <strong>5M TPS Domination</strong><br>
+                    5,000,000 TPS—faster than light, cheaper than dust, the ultimate Web3 juggernaut.
+                </div>
+                <div class="feature-item">
+                    <strong>100% APR Staking</strong><br>
+                    Stake $NONE and harvest wealth beyond the stars—Shiba’s richest vault.
+                </div>
+                <div class="feature-item">
+                    <strong>Bone Tsunami</strong><br>
+                    10-level referrals unleash a $BONE deluge—drown in rewards, Shiba style.
+                </div>
+                <div class="feature-item">
+                    <strong>2100 Titan Nodes</strong><br>
+                    Galactic sentinels securing a multi-trillion-dollar empire—unbreakable, unstoppable.
+                </div>
+                <div class="feature-item">
+                    <strong>Zero-Fee Cosmos</strong><br>
+                    Gas fees? Extinct. NoneChain is the Shiba Army’s infinite playground.
+                </div>
             </div>
-            <div class="percentage-buttons">
-                <button class="percentage-btn" onclick="setStakePercentage(25)">25%</button>
-                <button class="percentage-btn" onclick="setStakePercentage(50)">50%</button>
-                <button class="percentage-btn" onclick="setStakePercentage(75)">75%</button>
-                <button class="percentage-btn" onclick="setStakePercentage(100)">100%</button>
-            </div>
-            <div class="info-panel" id="myStakes">My Stakes: None</div>
+        </div>
+
+        <div class="section">
+            <div class="section-title">Conquer the Web3 Galaxy</div>
+            <p class="intro-text">
+                The Shiba pack roars—NoneChain is the Layer 3 colossus shattering Web3’s old guard. 
+                Join the revolution, stake your $NONE, and rule the cosmos with the fiercest army in blockchain history!
+            </p>
+            <button class="cta-button" onclick="window.open('https://app.nonechain.org', '_blank')">Claim Your Throne</button>
         </div>
     </div>
-    <footer id="footer">Powered by Shibarium © 2025</footer>
-    <div id="modal" class="modal">
-        <div class="modal-content">
-            <p id="modalMessage"></p>
-            <button onclick="closeModal()">OK</button>
-        </div>
-    </div>
-    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
-    <script>
-        let web3, accounts, contract;
-        const contractAddress = "0x64E19b6a167878d2483d166212A3c2c68b1eB842";
-        const WOOFCHAT_ADDRESS = "0xf34614AaBF9F83cF484c7CA29F6C76AD2be6c00B";
-        const PUNKPET_ADDRESS = "0x87BAf75990F5972b2cfa592f7efF691efb55596E";
-        const contractABI = [{"inputs":[],"stateMutability":"payable","type":"constructor"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"BoneRewardPending","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"BoneRewardsLocked","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"BoneWithdrawn","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"BoneCollectedUpdated","type":"event"},{"anonymous":false,"inputs":[],"name":"MiningEnded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"NoneBurned","type":"event"},{"anonymous":false,"inputs":[{"indexed":false,"internalType":"uint256","name":"newValue","type":"uint256"}],"name":"NonePerBlockUpdated","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"node","type":"address"}],"name":"NodeAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":true,"internalType":"address","name":"referrer","type":"address"}],"name":"ReferralAdded","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"totalAmount","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"nodeAmount","type":"uint256"}],"name":"RewardsClaimed","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"nodeId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"Staked","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"user","type":"address"},{"indexed":false,"internalType":"uint256","name":"nodeId","type":"uint256"},{"indexed":false,"internalType":"uint256","name":"amount","type":"uint256"}],"name":"StakeWithdrawn","type":"event"},{"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},{"inputs":[],"name":"BONE_PAYMENT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"INITIAL_MINING_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"INITIAL_STAKE_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_BONE_REWARDS","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_NODES","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MAX_SUPPLY","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MIN_MINING_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MIN_STAKE_REWARD","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"MIN_STAKE_UNIT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"NODE_PAYMENT","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"REFERRAL_BONUS_PERCENTAGE","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"account","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"becomeNode","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[],"name":"boneCollected","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"burn","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"uint256","name":"nodeId","type":"uint256"}],"name":"getNodeStakes","outputs":[{"internalType":"uint256","name":"stakesTotal","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"getReductionProgress","outputs":[{"internalType":"uint256","name":"reductionsDone","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getReferralInfo","outputs":[{"internalType":"uint256","name":"count","type":"uint256"},{"internalType":"uint256","name":"reward","type":"uint256"},{"internalType":"address","name":"referrer","type":"address"},{"internalType":"address[10]","name":"path","type":"address[10]"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getRewardInfo","outputs":[{"internalType":"uint256","name":"perBlock","type":"uint256"},{"internalType":"uint256","name":"pendingBone","type":"uint256"},{"internalType":"uint256","name":"totalBone","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getStakeInfo","outputs":[{"internalType":"uint256","name":"amount","type":"uint256"},{"internalType":"uint256","name":"nodeId","type":"uint256"},{"internalType":"uint256","name":"lastBlock","type":"uint256"},{"internalType":"uint256","name":"stakeReward","type":"uint256"},{"internalType":"uint256","name":"nodeReward","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getUserStatus","outputs":[{"internalType":"bool","name":"joined","type":"bool"},{"internalType":"bool","name":"paidBone","type":"bool"},{"internalType":"bool","name":"nodeStatus","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"hasJoined","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"hasPaidBone","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"isNode","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"referrer","type":"address"},{"internalType":"address","name":"user","type":"address"}],"name":"isReferral","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"isUserNode","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"_referrer","type":"address"}],"name":"joinWithReferrer","outputs":[],"stateMutability":"payable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"lastWithdrawalBlock","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"miningEnded","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"nodeCount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"nodeAddresses","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"","type":"uint256"}],"name":"nodeTotalStakes","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"nonePerBlock","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"pendingBoneRewards","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"referralCounts","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"},{"internalType":"uint256","name":"","type":"uint256"}],"name":"referralPath","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"referrers","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"uint256","name":"nodeId","type":"uint256"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"stakeToNode","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"startBlock","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"stakedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"lastUpdateBlock","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalBoneRewards","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalMinedAmount","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalMinedBlocks","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalNodeRewards","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalStaked","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"userInfo","outputs":[{"internalType":"uint256","name":"principal","type":"uint256"},{"internalType":"uint256","name":"lastRewardBlock","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"userNodeStake","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},{"inputs":[],"name":"withdrawAllBone","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdrawBoneWithReserve","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[],"name":"withdrawStake","outputs":[],"stateMutability":"nonpayable","type":"function"},{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getUserNodeId","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}];
-        const WOOFCHAT_ABI = [{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getNickname","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"}];
-        const PUNKPET_ABI = [{"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getUserPets","outputs":[{"internalType":"uint256[]","name":"petIds","type":"uint256[]"},{"internalType":"uint256[]","name":"petTypes","type":"uint256[]"},{"internalType":"uint256[]","name":"nextFeedTimes","type":"uint256[]"},{"internalType":"uint256[]","name":"feedCounts","type":"uint256[]"}],"stateMutability":"view","type":"function"}];
-        const shibariumMainnet = {
-            chainId: 109,
-            chainName: 'Shibarium',
-            nativeCurrency: { name: 'BONE', symbol: 'BONE', decimals: 18 },
-            rpcUrls: ['https://www.shibrpc.com'],
-            blockExplorerUrls: ['https://shibariumscan.io']
-        };
-        const avatarImages = [
-            null,
-            "1.png", "2.png", "3.png", "4.png", "5.png", "6.png", "7.png", "8.png", "9.png", "10.png",
-            "11.png", "12.png", "13.png", "14.png", "15.png", "16.png", "17.png", "18.png", "19.png", "20.png",
-            "21.png", "22.png", "23.png", "24.png", "25.png", "26.png", "27.png", "28.png", "29.png", "30.png",
-            "31.png", "32.png", "33.png", "34.png", "35.png", "36.png", "37.png", "38.png", "39.png", "40.png",
-            "41.png", "42.png", "43.png", "44.png", "45.png", "46.png", "47.png", "48.png", "49.png", "50.png",
-            "51.png", "52.png", "53.png", "54.png", "55.png", "56.png", "57.png", "58.png", "59.png", "60.png",
-            "61.png", "62.png", "63.png", "64.png", "65.png", "66.png", "67.png", "68.png", "69.png", "70.png",
-            "71.png", "72.png", "73.png", "74.png", "75.png", "76.png", "77.png"
-        ];
 
-        const prompts = [
-            "⛏️ Miner, ready your pickaxe! Let's dig some NONE!",
-            "💎 Found any NONE yet? Keep mining, champ!",
-            "⚡ Power up your rig! NONE awaits you!",
-            "🚀 Blast off to the NONE mines! Go go go!",
-            "🔥 Hot streak! Dig deeper for more NONE!",
-            "💰 Jackpot time! Stake more to win big!",
-            "⛏️ Swing that pickaxe! NONE is calling!",
-            "🌟 Shine bright, miner! NONE is your gem!",
-            "⚙️ Gear up! The NONE mines are open!",
-            "🎉 Party in the mines! Dig for NONE now!"
-        ];
-        let promptIndex = 0;
-
-        const claimMessages = [
-            "Hey miner! Invite a buddy to join the NONE party and claim this loot! 🚀",
-            "Your NONE is waiting! Call a friend to the mines and snag it! ⛏️",
-            "Whoa, free NONE! Get a pal to join and it’s yours, digger! 💎",
-            "Jackpot alert! Bring a friend aboard to unlock this NONE treasure! 💰",
-            "More miners, more NONE! Invite someone and grab your reward! ⚡"
-        ];
-
-        async function testImageLoad(url) {
-            return new Promise((resolve) => {
-                const img = new Image();
-                img.onload = () => resolve(true);
-                img.onerror = () => resolve(false);
-                img.src = url;
-            });
-        }
-
-        function showModal(message) {
-            document.getElementById('modalMessage').innerText = message;
-            document.getElementById('modal').style.display = 'flex';
-        }
-
-        function closeModal() {
-            document.getElementById('modal').style.display = 'none';
-        }
-
-        function updatePrompt() {
-            document.getElementById('minerPrompt').innerText = prompts[promptIndex];
-            promptIndex = (promptIndex + 1) % prompts.length;
-        }
-
-        async function updateRewardNone() {
-            if (!web3 || !contract || !accounts) {
-                document.getElementById('rewardNone').innerText = 'Reward: 0 NONE';
-                return;
-            }
-            try {
-                const referralInfo = await contract.methods.getReferralInfo(accounts[0]).call();
-                const reward = web3.utils.fromWei(referralInfo[1], 'ether');
-                document.getElementById('rewardNone').innerText = `Reward: ${parseFloat(reward).toFixed(2)} NONE`;
-            } catch (error) {
-                document.getElementById('rewardNone').innerText = 'Reward: 0 NONE';
-            }
-        }
-
-        async function updateUserInfo(address) {
-            if (!web3 || !address) {
-                document.getElementById('userNickname').innerText = 'Woof Wallet';
-                document.getElementById('userAvatar').src = 'images/default-avatar.png';
-                document.getElementById('vIcon').style.display = 'none';
-                return;
-            }
-
-            const woofChatContract = new web3.eth.Contract(WOOFCHAT_ABI, WOOFCHAT_ADDRESS);
-            try {
-                const nickname = await woofChatContract.methods.getNickname(address).call();
-                document.getElementById('userNickname').innerText = nickname || address.slice(0, 6) + "..." + address.slice(-4);
-            } catch (error) {
-                document.getElementById('userNickname').innerText = address.slice(0, 6) + "..." + address.slice(-4);
-            }
-
-            try {
-                const userStatus = await contract.methods.getUserStatus(address).call();
-                const referralInfo = await contract.methods.getReferralInfo(address).call();
-                const joined = userStatus[0];
-                const paidBone = userStatus[1];
-                const isNode = userStatus[2];
-                const referralCount = referralInfo[0];
-                const vIcon = document.getElementById('vIcon');
-                let selectedVIcon = null;
-                if (isNode === true || isNode === "true") {
-                    selectedVIcon = "images/300.png";
-                } else if (parseInt(referralCount) >= 10) {
-                    selectedVIcon = "images/200.png";
-                } else if (paidBone === true || paidBone === "true") {
-                    selectedVIcon = "images/100.png";
-                } else {
-                    vIcon.style.display = "none";
-                }
-                if (selectedVIcon) {
-                    const vIconLoaded = await testImageLoad(selectedVIcon);
-                    if (vIconLoaded) {
-                        vIcon.src = selectedVIcon;
-                        vIcon.style.display = "inline";
-                    } else {
-                        vIcon.style.display = "none";
-                    }
-                }
-            } catch (error) {
-                document.getElementById('vIcon').style.display = "none";
-            }
-
-            const punkPetContract = new web3.eth.Contract(PUNKPET_ABI, PUNKPET_ADDRESS);
-            const userAvatar = document.getElementById('userAvatar');
-            try {
-                const result = await punkPetContract.methods.getUserPets(address).call();
-                const petTypes = result[1];
-                if (petTypes && Array.isArray(petTypes) && petTypes.length > 0) {
-                    const validPetTypes = petTypes
-                        .map(t => {
-                            const num = typeof t === 'string' ? parseInt(t, 10) : Number(t);
-                            return isNaN(num) ? 0 : (num >= 1 && num <= 77 ? num : 0);
-                        })
-                        .filter(t => t >= 1 && t <= 77);
-                    if (validPetTypes.length > 0) {
-                        const maxPetType = Math.max(...validPetTypes);
-                        if (maxPetType >= 1 && maxPetType <= 77 && avatarImages[maxPetType]) {
-                            const avatarUrl = `images/${avatarImages[maxPetType]}`;
-                            const avatarLoaded = await testImageLoad(avatarUrl);
-                            if (avatarLoaded) {
-                                userAvatar.src = avatarUrl;
-                            } else {
-                                userAvatar.src = "images/default-avatar.png";
-                            }
-                        } else {
-                            userAvatar.src = "images/default-avatar.png";
-                        }
-                    } else {
-                        userAvatar.src = "images/default-avatar.png";
-                    }
-                } else {
-                    userAvatar.src = "images/default-avatar.png";
-                }
-            } catch (error) {
-                userAvatar.src = "images/default-avatar.png";
-            }
-        }
-
-        async function updateMyStakes() {
-            if (!web3 || !contract || !accounts) {
-                document.getElementById('myStakes').innerText = 'My Stakes: None';
-                return;
-            }
-            try {
-                const stakeInfo = await contract.methods.getStakeInfo(accounts[0]).call();
-                const amount = web3.utils.fromWei(stakeInfo[0], 'ether');
-                const nodeId = stakeInfo[1];
-                if (parseInt(amount) > 0) {
-                    document.getElementById('myStakes').innerText = `My Stakes: Node ${nodeId}: ${parseFloat(amount).toFixed(2)} NONE`;
-                } else {
-                    document.getElementById('myStakes').innerText = 'My Stakes: None';
-                }
-            } catch (error) {
-                document.getElementById('myStakes').innerText = 'My Stakes: None';
-            }
-        }
-
-        function claimReferralReward() {
-            if (!web3 || !contract || !accounts) {
-                showModal('Connect your wallet first, miner! 🔧');
-                return;
-            }
-            const randomMsg = claimMessages[Math.floor(Math.random() * claimMessages.length)];
-            showModal(randomMsg);
-        }
-
-        setInterval(updatePrompt, 3000);
-        setInterval(updateRewardNone, 5000);
-        setInterval(updateMyStakes, 5000);
-
-        async function connectWallet() {
-            const connectButton = document.getElementById('connectButton');
-            try {
-                if (!window.ethereum) {
-                    showModal('No wallet detected. Please install <a href="https://metamask.io" target="_blank">MetaMask</a> and run via a local server (e.g., "npx serve").');
-                    return;
-                }
-                connectButton.classList.add('loading');
-                web3 = new Web3(window.ethereum);
-                accounts = await window.ethereum.request({ method: 'eth_requestAccounts' });
-                if (!accounts.length) {
-                    showModal('Please unlock your wallet or connect it.');
-                    return;
-                }
-                const chainId = await web3.eth.getChainId();
-                if (chainId !== 109) {
-                    try {
-                        await window.ethereum.request({
-                            method: 'wallet_switchEthereumChain',
-                            params: [{ chainId: web3.utils.numberToHex(109) }]
-                        });
-                    } catch (switchError) {
-                        if (switchError.code === 4902) {
-                            await window.ethereum.request({
-                                method: 'wallet_addEthereumChain',
-                                params: [shibariumMainnet]
-                            });
-                        } else {
-                            showModal('Failed to switch network. Please add Shibarium manually.');
-                            return;
-                        }
-                    }
-                }
-                document.getElementById('walletAddress').innerText = `${accounts[0].slice(0, 6)}...${accounts[0].slice(-4)}`;
-                contract = new web3.eth.Contract(contractABI, contractAddress);
-                showModal('Connected to Shibarium successfully! 🎉');
-                updateNoneBalance();
-                updateJoinSection();
-                updateNodeSection();
-                updateRewardNone();
-                updateUserInfo(accounts[0]);
-                updateMyStakes();
-            } catch (error) {
-                showModal(`Connection failed: ${error.message}`);
-            } finally {
-                connectButton.classList.remove('loading');
-            }
-        }
-
-        async function updateJoinSection() {
-            if (!web3 || !contract || !accounts) return;
-            try {
-                const result = await contract.methods.getUserStatus(accounts[0]).call();
-                const hasPaidBone = result[1];
-                const joinSection = document.getElementById('joinSection');
-                if (hasPaidBone) {
-                    joinSection.innerHTML = `
-                        <div class="section-title" id="joinTitle">Join Network</div>
-                        <div class="info-panel">You have already joined the network.</div>
-                    `;
-                } else {
-                    joinSection.innerHTML = `
-                        <div class="section-title" id="joinTitle">Join Network</div>
-                        <div class="button-group">
-                            <button id="joinWithReferrerButton">Join (10 BONE)</button>
-                        </div>
-                        <div class="input-group">
-                            <input type="text" id="referrerInput" placeholder="Referrer Address">
-                        </div>
-                    `;
-                    document.getElementById('joinWithReferrerButton').addEventListener('click', joinWithReferrer);
-                }
-            } catch (error) {
-                showModal(`Failed to check join status: ${error.message}`);
-            }
-        }
-
-        async function updateNodeSection() {
-            if (!web3 || !contract || !accounts) return;
-            try {
-                const result = await contract.methods.getUserStatus(accounts[0]).call();
-                const isNode = result[2];
-                const nodeSection = document.getElementById('nodeSection');
-                if (isNode) {
-                    const nodeId = await contract.methods.getUserNodeId(accounts[0]).call();
-                    nodeSection.innerHTML = `
-                        <div class="section-title" id="nodeTitle">Become a Node</div>
-                        <div class="info-panel">You are a node! Your Node ID: ${nodeId}</div>
-                    `;
-                } else {
-                    nodeSection.innerHTML = `
-                        <div class="section-title" id="nodeTitle">Become a Node</div>
-                        <div class="button-group" id="nodeButtonGroup">
-                            <button id="becomeNodeButton">Node (1000 BONE)</button>
-                        </div>
-                        <div class="info-panel">You are not a node yet!</div>
-                    `;
-                    document.getElementById('becomeNodeButton').addEventListener('click', becomeNode);
-                }
-            } catch (error) {
-                showModal(`Failed to check node status: ${error.message}`);
-            }
-        }
-
-        async function joinWithReferrer() {
-            if (!web3 || !contract || !accounts) {
-                showModal('Please connect your wallet first! 🔧');
-                return;
-            }
-            const referrer = document.getElementById("referrerInput").value;
-            if (!referrer) {
-                showModal('Referrer address is required!');
-                return;
-            }
-            try {
-                showModal('Joining network with 10 BONE... 💎');
-                await contract.methods.joinWithReferrer(referrer).send({ from: accounts[0], value: web3.utils.toWei("10", "ether") });
-                showModal('Joined successfully! Start mining! 🚀');
-                updateNoneBalance();
-                updateJoinSection();
-                updateNodeSection();
-            } catch (error) {
-                showModal('Join failed: ' + error.message);
-            }
-        }
-
-        async function becomeNode() {
-            if (!web3 || !contract || !accounts) {
-                showModal('Please connect your wallet first! 🔧');
-                return;
-            }
-            try {
-                showModal('Upgrading to node with 1000 BONE... ⚙️');
-                await contract.methods.becomeNode().send({ from: accounts[0], value: web3.utils.toWei("1000", "ether") });
-                showModal('Upgraded to node! You\'re a mining boss! 🎉');
-                updateNodeSection();
-                updateNoneBalance();
-            } catch (error) {
-                showModal('Node upgrade failed: ' + error.message);
-            }
-        }
-
-        async function updateNoneBalance() {
-            if (!web3 || !contract || !accounts) return;
-            const balance = await contract.methods.balanceOf(accounts[0]).call();
-            document.getElementById('noneBalance').innerText = `${web3.utils.fromWei(balance, "ether")} NONE`;
-        }
-
-        function setStakePercentage(percentage) {
-            if (!web3 || !contract || !accounts) {
-                showModal('Please connect your wallet first! 🔧');
-                return;
-            }
-            updateNoneBalance().then(() => {
-                const balanceText = document.getElementById('noneBalance').innerText.split(' ')[0];
-                const balance = parseFloat(balanceText);
-                const minUnit = 10000;
-                const maxUnits = Math.floor(balance / minUnit);
-                if (maxUnits < 1) {
-                    document.getElementById('stakeAmountInput').value = 0;
-                } else {
-                    const units = Math.floor(maxUnits * percentage / 100);
-                    document.getElementById('stakeAmountInput').value = units * minUnit;
-                }
-            });
-        }
-
-        async function stakeToNode() {
-            if (!web3 || !contract || !accounts) {
-                showModal('Please connect your wallet first! 🔧');
-                return;
-            }
-            const nodeId = document.getElementById("nodeIdInput").value;
-            const amount = document.getElementById("stakeAmountInput").value;
-            try {
-                showModal(`Staking ${amount} NONE to Node ${nodeId}... ⛏️`);
-                await contract.methods.stakeToNode(nodeId, web3.utils.toWei(amount, "ether")).send({ from: accounts[0] });
-                showModal(`Staked ${amount} NONE to Node ${nodeId}! 💰`);
-                updateNoneBalance();
-                updateMyStakes();
-            } catch (error) {
-                showModal('Staking failed: ' + error.message);
-            }
-        }
-
-        async function withdrawStake() {
-            if (!web3 || !contract || !accounts) {
-                showModal('Please connect your wallet first! 🔧');
-                return;
-            }
-            try {
-                showModal('Withdrawing your stake... 💸');
-                await contract.methods.withdrawStake().send({ from: accounts[0] });
-                showModal('Stake withdrawn with rewards! 🎊');
-                updateNoneBalance();
-                updateMyStakes();
-            } catch (error) {
-                showModal('Withdrawal failed: ' + error.message);
-            }
-        }
-
-        document.getElementById('connectButton').addEventListener('click', connectWallet);
-        document.getElementById('joinWithReferrerButton').addEventListener('click', joinWithReferrer);
-        document.getElementById('becomeNodeButton').addEventListener('click', becomeNode);
-        document.getElementById('stakeButton').addEventListener('click', stakeToNode);
-        document.getElementById('withdrawStakeButton').addEventListener('click', withdrawStake);
-
-        window.ethereum?.on('chainChanged', (chainId) => {
-            if (parseInt(chainId, 16) !== 109) {
-                showModal('Switched to wrong network. Please reconnect to Shibarium.');
-                web3 = null;
-                contract = null;
-                accounts = null;
-                document.getElementById('walletAddress').innerText = 'Not connected';
-            } else {
-                connectWallet();
-            }
-        });
-
-        window.ethereum?.on('accountsChanged', (newAccounts) => {
-            if (newAccounts.length) {
-                connectWallet();
-            } else {
-                showModal('Wallet disconnected. Please reconnect.');
-                web3 = null;
-                contract = null;
-                accounts = null;
-                document.getElementById('walletAddress').innerText = 'Not connected';
-            }
-        });
-
-        window.addEventListener('load', () => {
-            if (!window.location.protocol.startsWith('http')) {
-                showModal('Please run this page via a local server (e.g., "npx serve") to connect MetaMask.');
-            } else if (!window.ethereum) {
-                showModal('No wallet detected. Please install <a href="https://metamask.io" target="_blank">MetaMask</a>.');
-            }
-        });
-    </script>
+    <footer>
+        <p>Powered by Shibarium © 2025 NoneChain DAO</p>
+        <p>Contact: <a href="mailto:shiba@nonechain.org">shiba@nonechain.org</a> | 
+           Token: <a href="https://www.shibariumscan.io/token/0x64E19b6a167878d2483d166212A3c2c68b1eB842" target="_blank">
+            0x64E19b6a167878d2483d166212A3c2c68b1eB842</a></p>
+    </footer>
 </body>
 </html>
