@@ -163,32 +163,19 @@
             gap: 15px;
             margin-top: 20px;
         }
-        .mining-link-btn {
+        .mining-link-btn, .cta-button {
             background: #F4A261;
             color: #fff;
             border: none;
-            padding: 10px 20px;
-            border-radius: 20px;
-            font-size: 1em;
-            text-decoration: none;
-            transition: background 0.3s;
-        }
-        .mining-link-btn:hover {
-            background: #E07A5F;
-        }
-        .cta-button {
-            background: #F4A261;
-            color: #fff;
-            border: none;
-            padding: 12px 30px;
+            padding: 12px 25px;
             border-radius: 25px;
+            text-decoration: none;
+            font-size: 1em;
             cursor: pointer;
-            font-size: 1.2em;
-            font-weight: bold;
             transition: background 0.3s;
-            margin-top: 20px;
+            display: inline-block;
         }
-        .cta-button:hover {
+        .mining-link-btn:hover, .cta-button:hover {
             background: #E07A5F;
         }
         footer {
@@ -216,8 +203,7 @@
             .roadmap-grid, .features-list { grid-template-columns: 1fr; }
             .roadmap-item, .feature-item { font-size: 0.9em; }
             .mining-links { gap: 10px; }
-            .mining-link-btn { font-size: 0.9em; padding: 8px 15px; }
-            .cta-button { font-size: 1em; padding: 10px 25px; }
+            .mining-link-btn, .cta-button { font-size: 0.9em; padding: 10px 20px; }
             .header-top .logo { font-size: 1.2em; }
             .social-btn { padding: 6px 10px; }
         }
@@ -227,7 +213,7 @@
             .miner-gif { width: 60px; height: 60px; }
             .section-title { font-size: 1.2em; }
             .section-text { font-size: 0.85em; }
-            .mining-link-btn { font-size: 0.8em; padding: 6px 12px; }
+            .mining-link-btn, .cta-button { font-size: 0.8em; padding: 8px 15px; }
         }
     </style>
 </head>
@@ -264,20 +250,28 @@
             <div class="section-title">Roadmap</div>
             <div class="roadmap-grid">
                 <div class="roadmap-item">
-                    <h3>Q1 - Foundation</h3>
-                    <p>Testnet launches on Shibarium, integrating $NONE mining with up to 15% APR staking.</p>
+                    <h3>Q1 - Mining Setup</h3>
+                    <p>Testnet launches, enabling $NONE mining with up to 15% APR staking.</p>
                 </div>
                 <div class="roadmap-item">
-                    <h3>Q2 - Mainnet</h3>
-                    <p>Mainnet goes live, enabling $NONE as the fuel for transactions and node operations.</p>
+                    <h3>Q2 - Mining Expansion</h3>
+                    <p>Enhance mining features, supporting 2100 nodes via the contract.</p>
                 </div>
                 <div class="roadmap-item">
-                    <h3>Q3 - Growth</h3>
-                    <p>Developer tools roll out, boosting DApps and partnerships within Shibarium.</p>
+                    <h3>Q3 - Mainnet Prep</h3>
+                    <p>Prepare mainnet infrastructure, testing transaction scalability.</p>
                 </div>
                 <div class="roadmap-item">
-                    <h3>Q4 - Scale</h3>
-                    <p>Expand to 50K users, distributing 250M $NONE in staking and referral rewards.</p>
+                    <h3>Q4 - Mainnet Launch</h3>
+                    <p>Mainnet goes live, introducing $NONE as transaction fuel.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3>Q5 - Ecosystem Build</h3>
+                    <p>Roll out developer tools and initial DApp integrations.</p>
+                </div>
+                <div class="roadmap-item">
+                    <h3>Q6 - Community Growth</h3>
+                    <p>Target 50K users, distributing 250M $NONE in rewards.</p>
                 </div>
             </div>
         </div>
@@ -286,25 +280,29 @@
             <div class="section-title">Features</div>
             <div class="features-list">
                 <div class="feature-item">
-                    <strong>Shibarium Powered</strong><br>
-                    Built on Shibarium for low-cost, high-speed performance.
+                    <strong>Shibarium Foundation</strong><br>
+                    Built on Shibarium for low-cost, efficient performance.
                 </div>
                 <div class="feature-item">
-                    <strong>Enhanced Speed</strong><br>
-                    Thousands of TPS to power the next generation of Web3 apps.
+                    <strong>High Throughput</strong><br>
+                    Thousands of TPS for smooth Web3 applications.
                 </div>
                 <div class="feature-item">
-                    <strong>Mining & Staking</strong><br>
-                    Earn up to 15% APR via $NONE mining and node staking (contract only).
+                    <strong>Mining Rewards</strong><br>
+                    Earn up to 15% APR via $NONE mining (contract-based).
                 </div>
                 <div class="feature-item">
-                    <strong>Referral System</strong><br>
-                    Invite friends, earn $BONE rewards across 10 levels.
-                </div>
-                <div class="feature-item">
-                    <strong>Node Strength</strong><br>
-                    2100 nodes secure the network. 
+                    <strong>Node Support</strong><br>
+                    2100 nodes enhance security, managed via contract. 
                     <a href="https://shibfun.github.io/nonenode/" target="_blank" style="color: #F4A261;">View Nodes</a>
+                </div>
+                <div class="feature-item">
+                    <strong>Mainnet Scalability</strong><br>
+                    Upcoming mainnet to boost transaction capacity.
+                </div>
+                <div class="feature-item">
+                    <strong>Community Incentives</strong><br>
+                    Referral and staking rewards to grow the ecosystem.
                 </div>
             </div>
         </div>
