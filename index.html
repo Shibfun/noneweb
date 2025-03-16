@@ -157,13 +157,21 @@
             font-size: 1.2em;
         }
         .mining-links {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
+            display: grid;
+            grid-template-columns: repeat(2, 1fr);
             gap: 15px;
             margin-top: 20px;
+            max-width: 600px;
+            margin-left: auto;
+            margin-right: auto;
         }
-        .mining-link-btn, .cta-button {
+        .mining-links-secondary {
+            display: flex;
+            justify-content: center;
+            gap: 15px;
+            margin-top: 15px;
+        }
+        .mining-link-btn, .mining-secondary-btn, .cta-button {
             background: #F4A261;
             color: #fff;
             border: none;
@@ -174,9 +182,17 @@
             cursor: pointer;
             transition: background 0.3s;
             display: inline-block;
+            text-align: center;
         }
-        .mining-link-btn:hover, .cta-button:hover {
+        .mining-link-btn:hover, .mining-secondary-btn:hover, .cta-button:hover {
             background: #E07A5F;
+        }
+        .mining-secondary-btn {
+            padding: 12px 40px;
+        }
+        .cta-button {
+            padding: 12px 40px;
+            margin-top: 20px;
         }
         footer {
             background: rgba(30, 42, 68, 0.8);
@@ -202,8 +218,8 @@
             .section-text { font-size: 0.95em; }
             .roadmap-grid, .features-list { grid-template-columns: 1fr; }
             .roadmap-item, .feature-item { font-size: 0.9em; }
-            .mining-links { gap: 10px; }
-            .mining-link-btn, .cta-button { font-size: 0.9em; padding: 10px 20px; }
+            .mining-links { grid-template-columns: 1fr; gap: 10px; }
+            .mining-link-btn, .mining-secondary-btn, .cta-button { font-size: 0.9em; padding: 10px 20px; }
             .header-top .logo { font-size: 1.2em; }
             .social-btn { padding: 6px 10px; }
         }
@@ -213,7 +229,7 @@
             .miner-gif { width: 60px; height: 60px; }
             .section-title { font-size: 1.2em; }
             .section-text { font-size: 0.85em; }
-            .mining-link-btn, .cta-button { font-size: 0.8em; padding: 8px 15px; }
+            .mining-link-btn, .mining-secondary-btn, .cta-button { font-size: 0.8em; padding: 8px 15px; }
         }
     </style>
 </head>
@@ -293,8 +309,7 @@
                 </div>
                 <div class="feature-item">
                     <strong>Node Support</strong><br>
-                    2100 nodes enhance security, managed via contract. 
-                    <a href="https://shibfun.github.io/nonenode/" target="_blank" style="color: #F4A261;">View Nodes</a>
+                    2100 nodes enhance security, managed via contract.
                 </div>
                 <div class="feature-item">
                     <strong>Mainnet Scalability</strong><br>
@@ -318,14 +333,16 @@
                 <a href="https://shibfun.github.io/nonejp/" target="_blank" class="mining-link-btn">NONE Mining (日本語)</a>
                 <a href="https://shibfun.github.io/nonear/" target="_blank" class="mining-link-btn">NONE Mining (العربية)</a>
             </div>
+            <div class="mining-links-secondary">
+                <a href="https://shibfun.github.io/nonenode/" target="_blank" class="mining-secondary-btn">View Nodes</a>
+            </div>
             <button class="cta-button" onclick="window.open('https://app.nonechain.org', '_blank')">Explore Now</button>
         </div>
     </div>
 
     <footer>
         <p>Powered by Shibarium © NoneChain DAO</p>
-        <p>Contact: <a href="mailto:info@nonechain.org">info@nonechain.org</a> | 
-           Token: <a href="https://www.shibariumscan.io/token/0x64E19b6a167878d2483d166212A3c2c68b1eB842" target="_blank">0x64E1...B842</a></p>
+        <p>Token: <a href="https://www.shibariumscan.io/token/0x64E19b6a167878d2483d166212A3c2c68b1eB842" target="_blank">0x64E1...B842</a></p>
     </footer>
 </body>
 </html>
