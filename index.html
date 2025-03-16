@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>NoneChain - Shibarium's Layer 3 Titan</title>
+    <title>NoneChain - Shibarium's Layer 3 Future</title>
     <link rel="icon" type="image/png" href="images/none.png">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
     <style>
@@ -18,7 +18,7 @@
             background-size: cover;
             position: relative;
             color: #fff;
-            line-height: 1.6;
+            line-height: 1.4;
             overflow-x: hidden;
             display: flex;
             flex-direction: column;
@@ -36,177 +36,157 @@
             filter: blur(5px);
             z-index: -1;
         }
-        .header, .content, footer {
+        .header, .container, footer {
             position: relative;
             z-index: 1;
             width: 100%;
         }
         .header {
-            padding: 20px 0;
+            padding: 10px 0;
             text-align: center;
-            background: rgba(44, 62, 80, 0.95);
-            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.5);
         }
         .header-top {
             display: flex;
             justify-content: space-between;
             align-items: center;
-            padding: 0 30px;
-            height: 60px;
+            padding: 0 15px;
+            height: 40px;
         }
         .header-top .logo {
-            font-size: 1.8em;
+            font-size: 1.1em;
             color: #F4A261;
             font-weight: bold;
             text-transform: uppercase;
-            letter-spacing: 2px;
         }
         .header-top .socials {
             display: flex;
-            gap: 20px;
+            gap: 10px;
         }
         .social-btn {
             background: #34495E;
             color: #fff;
             border: none;
-            padding: 10px 15px;
-            border-radius: 12px;
-            font-size: 1.2em;
+            padding: 5px 10px;
+            border-radius: 10px;
+            font-size: 0.8em;
             cursor: pointer;
-            transition: background 0.3s, transform 0.3s;
+            transition: background 0.3s;
         }
         .social-btn:hover {
             background: #F4A261;
-            transform: scale(1.1);
+        }
+        .social-btn i {
+            font-size: 1em;
         }
         .header-content {
-            padding: 60px 0;
+            padding: 20px 0;
         }
         .header-content h1 {
-            font-size: 4em;
+            font-size: 1.8em;
             color: #F4A261;
             text-transform: uppercase;
-            margin-bottom: 15px;
-            text-shadow: 3px 3px 15px rgba(0, 0, 0, 0.7);
+            margin-bottom: 10px;
+            text-shadow: 1px 1px 5px rgba(0, 0, 0, 0.5);
+        }
+        .header-content .miner-gif {
+            width: 80px;
+            height: 80px;
+            background: url('images/miner.gif') no-repeat center;
+            background-size: contain;
+            margin: 0 auto 10px;
         }
         .header-content p {
-            font-size: 1.5em;
+            font-size: 1em;
             color: #A8B5D4;
-            max-width: 900px;
+            max-width: 500px;
             margin: 0 auto;
         }
-        .content {
-            max-width: 1400px;
-            padding: 0 30px;
+        .container {
+            width: 100%;
+            max-width: 600px;
+            padding: 0 10px;
             flex-grow: 1;
             display: flex;
             flex-direction: column;
-            gap: 50px;
+            gap: 15px;
         }
         .section {
             background: rgba(44, 62, 80, 0.9);
-            padding: 40px;
-            border-radius: 20px;
-            box-shadow: 0 5px 20px rgba(0, 0, 0, 0.4);
+            padding: 15px;
+            border-radius: 15px;
+            box-shadow: 0 2px 5px rgba(0, 0, 0, 0.3);
             text-align: center;
         }
         .section-title {
-            font-size: 2.5em;
-            color: #F4A261;
-            margin-bottom: 25px;
-            text-transform: uppercase;
-            letter-spacing: 1px;
-        }
-        .intro-text {
             font-size: 1.2em;
-            color: #fff;
-            max-width: 1000px;
-            margin: 0 auto;
-        }
-        .roadmap-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
-            gap: 25px;
-            margin-top: 25px;
-        }
-        .roadmap-item {
-            background: #34495E;
-            padding: 25px;
-            border-radius: 15px;
-            transition: transform 0.3s, box-shadow 0.3s;
-        }
-        .roadmap-item:hover {
-            transform: translateY(-8px);
-            box-shadow: 0 5px 15px rgba(244, 162, 97, 0.5);
-        }
-        .roadmap-item h3 {
-            font-size: 1.5em;
             color: #F4A261;
-            margin-bottom: 15px;
+            margin-bottom: 10px;
+            text-transform: uppercase;
         }
-        .roadmap-item p {
-            font-size: 1em;
+        .section-text {
+            font-size: 0.9em;
+            color: #fff;
+            margin: 0 auto;
+            max-width: 500px;
+        }
+        .roadmap-grid, .features-list {
+            display: flex;
+            flex-direction: column;
+            gap: 10px;
+            margin-top: 10px;
+        }
+        .roadmap-item, .feature-item {
+            background: #34495E;
+            padding: 12px;
+            border-radius: 10px;
+            font-size: 0.85em;
             color: #A8B5D4;
         }
-        .features-list {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
-            gap: 25px;
-            margin-top: 25px;
-        }
-        .feature-item {
-            background: #34495E;
-            padding: 25px;
-            border-radius: 15px;
-            font-size: 1.1em;
-            transition: background 0.3s;
-        }
-        .feature-item:hover {
-            background: #3D5A74;
+        .roadmap-item h3 {
+            font-size: 1em;
+            color: #F4A261;
+            margin-bottom: 5px;
         }
         .feature-item strong {
             color: #F4A261;
-            font-size: 1.2em;
         }
         .cta-button {
             background: #F4A261;
             color: #fff;
             border: none;
-            padding: 15px 40px;
-            border-radius: 25px;
-            font-size: 1.4em;
-            font-weight: bold;
+            padding: 8px 15px;
+            border-radius: 20px;
             cursor: pointer;
-            transition: background 0.3s, transform 0.3s;
-            display: inline-block;
-            margin-top: 25px;
+            font-size: 0.9em;
+            transition: background 0.3s;
+            margin-top: 10px;
         }
         .cta-button:hover {
             background: #E07A5F;
-            transform: scale(1.05);
         }
         footer {
-            background: rgba(30, 42, 68, 0.9);
+            background: rgba(30, 42, 68, 0.8);
             text-align: center;
-            padding: 30px;
+            padding: 10px;
+            width: 100%;
             color: #A8B5D4;
-            font-size: 1em;
+            font-size: 0.8em;
+            margin-top: 20px;
         }
         footer a {
             color: #F4A261;
             text-decoration: none;
-            transition: color 0.3s;
         }
         footer a:hover {
             color: #E07A5F;
         }
-        @media (max-width: 768px) {
-            .header-content h1 { font-size: 2.5em; }
-            .header-content p { font-size: 1.2em; }
-            .section-title { font-size: 1.8em; }
-            .cta-button { font-size: 1.2em; padding: 12px 30px; }
-            .header-top .logo { font-size: 1.3em; }
-            .social-btn { padding: 8px 12px; font-size: 1em; }
+        @media (max-width: 480px) {
+            .header-content h1 { font-size: 1.5em; }
+            .header-content p { font-size: 0.9em; }
+            .miner-gif { width: 60px; height: 60px; }
+            .section-title { font-size: 1em; }
+            .section-text, .roadmap-item, .feature-item { font-size: 0.8em; }
+            .social-btn { padding: 4px 8px; }
         }
     </style>
 </head>
@@ -222,99 +202,80 @@
         </div>
         <div class="header-content">
             <h1>NoneChain</h1>
-            <p>Shibarium’s Layer 3 Behemoth - The Cosmic Apex of Web3 Supremacy</p>
+            <div class="miner-gif"></div>
+            <p>Shibarium's Layer 3 Evolution - Powering the Shiba Future</p>
         </div>
     </div>
 
-    <div class="content">
+    <div class="container">
         <div class="section">
-            <div class="section-title">Welcome to NoneChain</div>
-            <p class="intro-text">
-                Anchored on Shibarium at 
+            <div class="section-title">About NoneChain</div>
+            <p class="section-text">
+                Deployed on Shibarium at 
                 <a href="https://www.shibariumscan.io/token/0x64E19b6a167878d2483d166212A3c2c68b1eB842" target="_blank" style="color: #F4A261;">
-                    0x64E19b6a167878d2483d166212A3c2c68b1eB842
+                    0x64E1...B842
                 </a>, 
-                NoneChain transcends Layer 3 limits to forge an interstellar empire for the Shiba Army. 
-                With quantum-level speeds, astronomical staking yields, and a trillion-dollar vision, 
-                we’re the unrivaled titan rewriting the Web3 cosmos—fueled by $NONE, the Shiba crown jewel.
+                NoneChain enhances the Shiba ecosystem as a Layer 3 solution. 
+                Built for speed, staking, and community rewards, it’s the next step in Shibarium’s journey.
             </p>
         </div>
 
         <div class="section">
-            <div class="section-title">Cosmic Roadmap</div>
+            <div class="section-title">Roadmap</div>
             <div class="roadmap-grid">
                 <div class="roadmap-item">
-                    <h3>Q1 2025 - Quantum Dawn</h3>
-                    <p>
-                        Testnet explodes on Shibarium Orbit. $NONE staking ignites with 100% APR teaser—shattering all records.
-                    </p>
+                    <h3>Q1 2025 - Launch Prep</h3>
+                    <p>Testnet rolls out on Shibarium, testing $NONE staking with up to 20% APR.</p>
                 </div>
                 <div class="roadmap-item">
-                    <h3>Q2 2025 - Galactic Mainnet</h3>
-                    <p>
-                        Mainnet roars live—$NONE reigns as Gas overlord. Shiba Nebula bridge obliterates Ethereum barriers.
-                    </p>
+                    <h3>Q2 2025 - Mainnet Live</h3>
+                    <p>Mainnet launches, with $NONE powering transactions and node rewards.</p>
                 </div>
                 <div class="roadmap-item">
-                    <h3>Q3 2025 - Stellar Ascension</h3>
-                    <p>
-                        SDK unleashes DApp creation at warp speed. 2100 Titan Nodes forge an invincible trillion-dollar fortress.
-                    </p>
+                    <h3>Q3 2025 - Ecosystem Growth</h3>
+                    <p>SDK release for devs, partnerships with Shibarium projects kick off.</p>
                 </div>
                 <div class="roadmap-item">
-                    <h3>Q4 2025 - Universal Conquest</h3>
-                    <p>
-                        10M daily users crown NoneChain king. 50B $NONE “Bone Tsunami” buries rivals in Shiba glory.
-                    </p>
+                    <h3>Q4 2025 - Expansion</h3>
+                    <p>Scale to 100K users, boost staking pools with 500M $NONE rewards.</p>
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">Unmatched Supremacy</div>
+            <div class="section-title">Features</div>
             <div class="features-list">
                 <div class="feature-item">
-                    <strong>Shiba Nebula Bridge</strong><br>
-                    $NONE teleports from Shibarium’s core to NoneChain’s throne—cross-chain redefined.
+                    <strong>Shibarium Native</strong> - Built on Shibarium for low fees and high efficiency.
                 </div>
                 <div class="feature-item">
-                    <strong>5M TPS Domination</strong><br>
-                    5,000,000 TPS—faster than light, cheaper than dust, the ultimate Web3 juggernaut.
+                    <strong>Fast Transactions</strong> - Thousands of TPS for smooth Web3 experiences.
                 </div>
                 <div class="feature-item">
-                    <strong>100% APR Staking</strong><br>
-                    Stake $NONE and harvest wealth beyond the stars—Shiba’s richest vault.
+                    <strong>Staking Rewards</strong> - Earn up to 20% APR by staking $NONE.
                 </div>
                 <div class="feature-item">
-                    <strong>Bone Tsunami</strong><br>
-                    10-level referrals unleash a $BONE deluge—drown in rewards, Shiba style.
+                    <strong>Referral Boost</strong> - Invite friends, earn $BONE across 10 levels.
                 </div>
                 <div class="feature-item">
-                    <strong>2100 Titan Nodes</strong><br>
-                    Galactic sentinels securing a multi-trillion-dollar empire—unbreakable, unstoppable.
-                </div>
-                <div class="feature-item">
-                    <strong>Zero-Fee Cosmos</strong><br>
-                    Gas fees? Extinct. NoneChain is the Shiba Army’s infinite playground.
+                    <strong>Node Network</strong> - 2100 nodes strengthen the NoneChain backbone.
                 </div>
             </div>
         </div>
 
         <div class="section">
-            <div class="section-title">Conquer the Web3 Galaxy</div>
-            <p class="intro-text">
-                The Shiba pack roars—NoneChain is the Layer 3 colossus shattering Web3’s old guard. 
-                Join the revolution, stake your $NONE, and rule the cosmos with the fiercest army in blockchain history!
+            <div class="section-title">Join Us</div>
+            <p class="section-text">
+                Be part of the Shiba Army’s next big leap. Stake, mine, and grow with NoneChain—Shibarium’s Layer 3 frontier!
             </p>
-            <button class="cta-button" onclick="window.open('https://app.nonechain.org', '_blank')">Claim Your Throne</button>
+            <button class="cta-button" onclick="window.open('https://app.nonechain.org', '_blank')">Get Started</button>
         </div>
     </div>
 
     <footer>
         <p>Powered by Shibarium © 2025 NoneChain DAO</p>
-        <p>Contact: <a href="mailto:shiba@nonechain.org">shiba@nonechain.org</a> | 
-           Token: <a href="https://www.shibariumscan.io/token/0x64E19b6a167878d2483d166212A3c2c68b1eB842" target="_blank">
-            0x64E19b6a167878d2483d166212A3c2c68b1eB842</a></p>
+        <p>Contact: <a href="mailto:info@nonechain.org">info@nonechain.org</a> | 
+           Token: <a href="https://www.shibariumscan.io/token/0x64E19b6a167878d2483d166212A3c2c68b1eB842" target="_blank">0x64E1...B842</a></p>
     </footer>
 </body>
 </html>
