@@ -306,7 +306,7 @@
         }
 
         function formatAmount(amount) {
-            return (Number(amount) / 1e18).toFixed(2);
+            return Number(web3.utils.fromWei(amount, "ether")).toFixed(2);
         }
 
         function showStatus(message, isError = false) {
@@ -386,14 +386,15 @@
                     return;
                 }
                 const contract = new web3.eth.Contract(contractAbi, contractAddress);
-                let maxAllowed = 0, minted = 0, balance = 0;
+                let maxAllowed = "0", minted = "0", balance = "0", remaining = "0";
                 if (account) {
                     const mintingStatus = await contract.methods.getMintingStatus(account).call();
-                    maxAllowed = Number(mintingStatus.maxAllowed);
-                    minted = Number(mintingStatus.minted);
-                    balance = Number(await contract.methods.balanceOf(account).call());
+                    maxAllowed = mintingStatus.maxAllowed;
+                    minted = mintingStatus.minted;
+                    balance = await contract.methods.balanceOf(account).call();
+                    remaining = web3.utils.toBN(maxAllowed).sub(web3.utils.toBN(minted)).toString();
                 }
-                const remaining = maxAllowed - minted;
+                const isClaimable = web3.utils.toBN(remaining).gt(web3.utils.toBN(0));
                 card.innerHTML = `
                     <div class="card-header">
                         <h3>Airdrop Contract</h3>
@@ -416,7 +417,7 @@
                         <div class="action-box">
                             <h5>Claim Your Tokens</h5>
                             <p class="stake-note">Note: Clicking the button will mint all your remaining claimable tokens.</p>
-                            <button class="action-button" id="claimButton" ${!account || remaining <= 0 ? 'disabled' : ''}>Claim Tokens</button>
+                            <button class="action-button" id="claimButton" ${!account || !isClaimable ? 'disabled' : ''}>Claim Tokens</button>
                         </div>
                     </div>
                 `;
@@ -450,7 +451,7 @@
                 showStatus("Please connect wallet.", true);
                 return;
             }
-            if (remaining <= 0) {
+            if (web3.utils.toBN(remaining).isZero()) {
                 showStatus("No remaining tokens to claim.", true);
                 return;
             }
@@ -468,7 +469,7 @@
                 console.error("Claim error:", e);
             } finally {
                 button.classList.remove("loading");
-                button.disabled = remaining <= 0;
+                button.disabled = web3.utils.toBN(remaining).isZero();
             }
         }
 
