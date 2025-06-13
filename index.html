@@ -1,1 +1,502 @@
-Coming Soon
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Airdrop Claim</title>
+    <link rel="icon" type="image/png" href="https://shibarium.fun/images/favicon.png">
+    <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;500;600;700&display=swap" rel="stylesheet">
+    <style>
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0;
+        }
+        body {
+            font-family: 'Inter', sans-serif;
+            background: #121212;
+            color: #E0E0E0;
+            min-height: 100vh;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            padding: 16px;
+        }
+        .header {
+            text-align: center;
+            margin-bottom: 24px;
+        }
+        .header h1 {
+            font-size: clamp(1.8rem, 5vw, 2.5rem);
+            font-weight: 700;
+            color: #FF8C00;
+            letter-spacing: 1px;
+        }
+        .connect-section {
+            margin-bottom: 16px;
+        }
+        .connect-section button {
+            padding: 10px 24px;
+            background: linear-gradient(45deg, #FF8C00, #FFA500);
+            color: #FFF;
+            border: none;
+            border-radius: 24px;
+            font-weight: 600;
+            cursor: pointer;
+            font-size: 1rem;
+            transition: transform 0.2s, background 0.3s;
+        }
+        .connect-section button:hover {
+            transform: scale(1.05);
+            background: linear-gradient(45deg, #FFA500, #FF8C00);
+        }
+        .container {
+            width: 100%;
+            max-width: 1200px;
+            display: flex;
+            flex-wrap: wrap;
+            gap: 24px;
+            justify-content: center;
+        }
+        .card {
+            background: #1E1E1E;
+            border: 1px solid #333;
+            border-radius: 16px;
+            overflow: hidden;
+            box-shadow: 0 4px 12px rgba(0, 0, 0, 0.2);
+            width: 100%;
+            max-width: 500px;
+            display: flex;
+            flex-direction: column;
+        }
+        .card-header {
+            display: flex;
+            align-items: center;
+            padding: 16px;
+            background: #252525;
+            border-bottom: 1px solid #333;
+        }
+        .card-header h3 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            flex-grow: 1;
+            color: #E0E0E0;
+        }
+        .card-header .copy-button {
+            background: none;
+            border: none;
+            cursor: pointer;
+            padding: 6px;
+            position: relative;
+        }
+        .card-header .copy-button img {
+            width: 18px;
+            height: 18px;
+            filter: invert(1);
+        }
+        .card-header .copy-button .tooltip {
+            visibility: hidden;
+            background: #FF8C00;
+            color: #FFF;
+            font-size: 0.8rem;
+            padding: 4px 8px;
+            border-radius: 4px;
+            position: absolute;
+            top: -30px;
+            right: 0;
+            opacity: 0;
+            transition: opacity 0.2s;
+        }
+        .card-header .copy-button.copied .tooltip {
+            visibility: visible;
+            opacity: 1;
+        }
+        .card-content {
+            padding: 16px;
+            flex-grow: 1;
+        }
+        .card-content h4 {
+            font-size: 1.4rem;
+            font-weight: 600;
+            margin-bottom: 12px;
+            color: #FF8C00;
+        }
+        .card-content p.description {
+            font-size: 0.9rem;
+            color: #B0B0B0;
+            margin-bottom: 16px;
+            line-height: 1.5;
+        }
+        .card-content .status-box {
+            margin-bottom: 16px;
+        }
+        .card-content .status-box p {
+            font-size: 0.9rem;
+            color: #E0E0E0;
+            margin-bottom: 8px;
+        }
+        .action-section {
+            padding: 16px;
+            border-top: 1px solid #333;
+        }
+        .action-box {
+            background: #252525;
+            padding: 16px;
+            border-radius: 12px;
+            margin-bottom: 16px;
+        }
+        .action-box h5 {
+            font-size: 1.1rem;
+            font-weight: 600;
+            color: #FF8C00;
+            margin-bottom: 12px;
+        }
+        .action-box .action-button {
+            padding: 10px;
+            background: linear-gradient(45deg, #FF8C00, #FFA500);
+            color: #FFF;
+            border: none;
+            border-radius: 8px;
+            cursor: pointer;
+            font-weight: 600;
+            width: 100%;
+            font-size: 0.9rem;
+            position: relative;
+            transition: background 0.3s;
+            margin-top: 12px;
+        }
+        .action-box .action-button:disabled {
+            background: #555;
+            cursor: not-allowed;
+        }
+        .action-box .action-button:hover:not(:disabled) {
+            background: linear-gradient(45deg, #FFA500, #FF8C00);
+        }
+        .action-box .action-button .spinner {
+            display: none;
+            border: 2px solid #FFF;
+            border-top: 2px solid transparent;
+            border-radius: 50%;
+            width: 16px;
+            height: 16px;
+            animation: spin 1s linear infinite;
+            position: absolute;
+            left: 12px;
+            top: 50%;
+            transform: translateY(-50%);
+        }
+        .action-box .action-button.loading .spinner {
+            display: block;
+        }
+        .global-spinner {
+            border: 4px solid #FF8C00;
+            border-top: 4px solid transparent;
+            border-radius: 50%;
+            width: 40px;
+            height: 40px;
+            animation: spin 1s linear infinite;
+            margin: 24px auto;
+            display: none;
+        }
+        @keyframes spin {
+            0% { transform: rotate(0deg); }
+            100% { transform: rotate(360deg); }
+        }
+        .status {
+            font-size: 0.9rem;
+            color: #FF8C00;
+            text-align: center;
+            margin: 12px 0;
+        }
+        .stake-note {
+            font-size: 0.85rem;
+            color: #FFA500;
+            margin-top: 8px;
+            text-align: left;
+        }
+        .footer {
+            font-size: 0.8rem;
+            color: #B0B0B0;
+            text-align: center;
+            margin-top: auto;
+            padding: 16px;
+        }
+        .footer a {
+            color: #FF8C00;
+            text-decoration: none;
+            transition: color 0.2s;
+        }
+        .footer a:hover {
+            color: #FFA500;
+        }
+        @media (max-width: 768px) {
+            body {
+                padding: 12px;
+            }
+            .header h1 {
+                font-size: 1.8rem;
+            }
+            .card {
+                max-width: 100%;
+            }
+            .card-header h3 {
+                font-size: 1rem;
+            }
+            .card-content h4 {
+                font-size: 1.2rem;
+            }
+            .card-content p.description {
+                font-size: 0.85rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="header">
+        <h1>Airdrop Claim</h1>
+    </div>
+    <div class="connect-section">
+        <button id="connectWalletButton">Connect Wallet</button>
+    </div>
+    <div id="searchStatus" class="status"></div>
+    <div class="global-spinner" id="globalSpinner"></div>
+    <div class="container">
+        <div class="card" id="actionCard"></div>
+    </div>
+    <div class="footer">
+        Powered by <a href="https://shibarium.shib.io/" target="_blank">Shibarium</a> | ShibClub © 2025
+    </div>
+
+    <script src="https://cdn.jsdelivr.net/npm/web3@1.7.0/dist/web3.min.js"></script>
+    <script>
+        let web3, account;
+        const contractAddress = "0xC5703A95594Eb189D1ce8c32c5E90D56F432e273";
+        const shibarium = {
+            chainId: "0x6d",
+            chainName: "Shibarium",
+            nativeCurrency: { name: "BONE", symbol: "BONE", decimals: 18 },
+            rpcUrls: ["https://rpc.shibrpc.com", "https://www.shibrpc.com"],
+            blockExplorerUrls: ["https://shibariumscan.io"]
+        };
+        const contractAbi = [
+            {"inputs":[],"stateMutability":"nonpayable","type":"constructor"},
+            {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"owner","type":"address"},{"indexed":true,"internalType":"address","name":"spender","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Approval","type":"event"},
+            {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"previousOwner","type":"address"},{"indexed":true,"internalType":"address","name":"newOwner","type":"address"}],"name":"OwnershipTransferred","type":"event"},
+            {"anonymous":false,"inputs":[{"indexed":true,"internalType":"address","name":"from","type":"address"},{"indexed":true,"internalType":"address","name":"to","type":"address"},{"indexed":false,"internalType":"uint256","name":"value","type":"uint256"}],"name":"Transfer","type":"event"},
+            {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"approve","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[{"internalType":"address","name":"owner","type":"address"}],"name":"balanceOf","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"subtractedValue","type":"uint256"}],"name":"decreaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[{"internalType":"address","name":"user","type":"address"}],"name":"getMintingStatus","outputs":[{"internalType":"uint256","name":"maxAllowed","type":"uint256"},{"internalType":"uint256","name":"minted","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[{"internalType":"address","name":"spender","type":"address"},{"internalType":"uint256","name":"addedValue","type":"uint256"}],"name":"increaseAllowance","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"mint","outputs":[],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[],"name":"renounceOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transfer","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[{"internalType":"address","name":"from","type":"address"},{"internalType":"address","name":"to","type":"address"},{"internalType":"uint256","name":"amount","type":"uint256"}],"name":"transferFrom","outputs":[{"internalType":"bool","name":"","type":"bool"}],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[{"internalType":"address","name":"newOwner","type":"address"}],"name":"transferOwnership","outputs":[],"stateMutability":"nonpayable","type":"function"},
+            {"inputs":[{"internalType":"address","name":"owner","type":"address"},{"internalType":"address","name":"spender","type":"address"}],"name":"allowance","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"decimals","outputs":[{"internalType":"uint8","name":"","type":"uint8"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"name","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"owner","outputs":[{"internalType":"address","name":"","type":"address"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"symbol","outputs":[{"internalType":"string","name":"","type":"string"}],"stateMutability":"view","type":"function"},
+            {"inputs":[],"name":"totalSupply","outputs":[{"internalType":"uint256","name":"","type":"uint256"}],"stateMutability":"view","type":"function"}
+        ];
+
+        function shortenAddress(address) {
+            return address ? `${address.slice(0, 6)}...${address.slice(-4)}` : "0x...";
+        }
+
+        function formatAmount(amount) {
+            return (Number(amount) / 1e18).toFixed(2);
+        }
+
+        function showStatus(message, isError = false) {
+            const status = document.getElementById("searchStatus");
+            status.innerText = message;
+            status.style.color = isError ? "#FF4444" : "#FF8C00";
+            setTimeout(() => { status.innerText = ""; }, 5000);
+        }
+
+        async function tryInitializeWeb3() {
+            for (const rpc of shibarium.rpcUrls) {
+                try {
+                    web3 = new Web3(rpc);
+                    await web3.eth.getBlockNumber();
+                    return true;
+                } catch (e) {
+                    console.warn(`RPC ${rpc} failed: ${e.message}`);
+                }
+            }
+            return false;
+        }
+
+        async function connectWallet() {
+            try {
+                if (!window.ethereum) {
+                    showStatus("Please install MetaMask.", true);
+                    return;
+                }
+                document.getElementById("searchStatus").innerText = "Connecting...";
+                document.getElementById("globalSpinner").style.display = "block";
+                web3 = new Web3(window.ethereum);
+                const accounts = await window.ethereum.request({ method: "eth_requestAccounts" });
+                if (!accounts.length) {
+                    showStatus("Please unlock wallet.", true);
+                    return;
+                }
+                account = accounts[0];
+                const chainId = await web3.eth.getChainId();
+                if (Number(chainId) !== 109) {
+                    try {
+                        await window.ethereum.request({ method: "wallet_switchEthereumChain", params: [{ chainId: shibarium.chainId }] });
+                    } catch (switchError) {
+                        if (switchError.code === 4902) {
+                            await window.ethereum.request({ method: "wallet_addEthereumChain", params: [shibarium] });
+                        } else {
+                            throw switchError;
+                        }
+                    }
+                }
+                document.getElementById("connectWalletButton").innerText = shortenAddress(account);
+                showStatus("Connected to Shibarium");
+                await loadActionCard();
+            } catch (error) {
+                showStatus(`Connection failed: ${error.message}`, true);
+                resetUI();
+            } finally {
+                document.getElementById("globalSpinner").style.display = "none";
+            }
+        }
+
+        function resetUI() {
+            document.getElementById("connectWalletButton").innerText = "Connect Wallet";
+            document.getElementById("searchStatus").innerText = "";
+            const actionButton = document.querySelector(".action-button");
+            if (actionButton) actionButton.disabled = true;
+        }
+
+        async function loadActionCard() {
+            const status = document.getElementById("searchStatus");
+            const card = document.getElementById("actionCard");
+            const spinner = document.getElementById("globalSpinner");
+            try {
+                status.innerText = "Loading data...";
+                spinner.style.display = "block";
+                if (!web3 && !await tryInitializeWeb3()) {
+                    showStatus("Failed to connect to Shibarium.", true);
+                    return;
+                }
+                const contract = new web3.eth.Contract(contractAbi, contractAddress);
+                let maxAllowed = 0, minted = 0, balance = 0;
+                if (account) {
+                    const mintingStatus = await contract.methods.getMintingStatus(account).call();
+                    maxAllowed = Number(mintingStatus.maxAllowed);
+                    minted = Number(mintingStatus.minted);
+                    balance = Number(await contract.methods.balanceOf(account).call());
+                }
+                const remaining = maxAllowed - minted;
+                card.innerHTML = `
+                    <div class="card-header">
+                        <h3>Airdrop Contract</h3>
+                        <button class="copy-button" data-address="${contractAddress}">
+                            <img src="https://img.icons8.com/ios-filled/16/000000/contract.png" alt="Copy Contract">
+                            <span class="tooltip">Copied Contract Address</span>
+                        </button>
+                    </div>
+                    <div class="card-content">
+                        <h4>Claim AIR Tokens</h4>
+                        <p class="description">Connect your wallet to view your airdrop eligibility and claim AIR tokens. Users can claim up to 10,000 AIR, nodes up to 1,000,000 AIR, or 1,010,000 AIR if both.</p>
+                        <div class="status-box">
+                            <p>Your Balance: ${formatAmount(balance)} AIR</p>
+                            <p>Max Claimable: ${formatAmount(maxAllowed)} AIR</p>
+                            <p>Already Claimed: ${formatAmount(minted)} AIR</p>
+                            <p>Remaining Claimable: ${formatAmount(remaining)} AIR</p>
+                        </div>
+                    </div>
+                    <div class="action-section">
+                        <div class="action-box">
+                            <h5>Claim Your Tokens</h5>
+                            <p class="stake-note">Note: Clicking the button will mint all your remaining claimable tokens.</p>
+                            <button class="action-button" id="claimButton" ${!account || remaining <= 0 ? 'disabled' : ''}>Claim Tokens</button>
+                        </div>
+                    </div>
+                `;
+                setupCardListeners(card, contract, remaining);
+                showStatus();
+            } catch (e) {
+                showStatus(`Failed to load data: ${e.message}`, true);
+            } finally {
+                spinner.style.display = "none";
+            }
+        }
+
+        function setupCardListeners(card, contract, remaining) {
+            card.querySelectorAll(".copy-button").forEach(button => {
+                button.addEventListener("click", () => {
+                    navigator.clipboard.writeText(button.dataset.address).then(() => {
+                        button.classList.add("copied");
+                        setTimeout(() => button.classList.remove("copied"), 1000);
+                    }).catch(() => showStatus("Failed to copy address.", true));
+                });
+            });
+
+            const claimButton = card.querySelector("#claimButton");
+            if (claimButton) {
+                claimButton.addEventListener("click", async () => await claimTokens(card, contract, remaining));
+            }
+        }
+
+        async function claimTokens(card, contract, remaining) {
+            if (!web3 || !account) {
+                showStatus("Please connect wallet.", true);
+                return;
+            }
+            if (remaining <= 0) {
+                showStatus("No remaining tokens to claim.", true);
+                return;
+            }
+            const button = card.querySelector("#claimButton");
+            try {
+                button.classList.add("loading");
+                button.disabled = true;
+                showStatus("Processing claim...");
+                await contract.methods.mint(remaining).send({ from: account });
+                showStatus("Claim successful!");
+                await loadActionCard();
+            } catch (e) {
+                const msg = e.code === 4001 ? "User rejected transaction." : e.message.includes("revert") ? "Transaction reverted." : e.message;
+                showStatus(`Claim failed: ${msg}`, true);
+                console.error("Claim error:", e);
+            } finally {
+                button.classList.remove("loading");
+                button.disabled = remaining <= 0;
+            }
+        }
+
+        document.getElementById("connectWalletButton").addEventListener("click", connectWallet);
+        window.addEventListener("load", async () => {
+            if (!window.location.protocol.includes("http")) {
+                showStatus('Please run via server (e.g., "npx serve").', true);
+                return;
+            }
+            if (await tryInitializeWeb3()) {
+                await loadActionCard();
+            } else {
+                showStatus("Failed to connect to Shibarium.", true);
+            }
+        });
+
+        window.ethereum?.on("accountsChanged", async accounts => {
+            if (!accounts.length) {
+                resetUI();
+                showStatus("Wallet disconnected.", true);
+            } else {
+                account = accounts[0];
+                document.getElementById("connectWalletButton").innerText = shortenAddress(account);
+                await loadActionCard();
+            }
+        });
+
+        window.ethereum?.on("chainChanged", connectWallet);
+    </script>
+</body>
+</html>
